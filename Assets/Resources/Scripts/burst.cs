@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class burst : MonoBehaviour
 {
-    public float force;
+    [SerializeField] private float force;
     private Rigidbody2D rbody;
+    [SerializeField] private float _speed;
 
     void Awake()
     {
@@ -14,13 +15,7 @@ public class burst : MonoBehaviour
     }
     void Update()
     {
+        this.transform.localScale *= 1 + Time.deltaTime * _speed;
         Destroy(this.gameObject,1.0f);
-    }
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy")) 
-        {
-            Destroy(collision.gameObject);
-        }
     }
 }

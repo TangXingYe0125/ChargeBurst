@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class Unseen_Blade : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         Destroy(this.gameObject, 0.1f);
     }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))

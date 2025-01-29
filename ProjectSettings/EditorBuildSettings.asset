@@ -9,9 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Play.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Defeat.unity
+    path: Assets/Scenes/Title.unity
     guid: 049d58a494da57345b3cd89002cbcc0b
   - enabled: 1
     path: Assets/Scenes/Win.unity
     guid: e5ed6de9f1851f646a1fbc17a6db6cff
+  - enabled: 1
+    path: Assets/Scenes/Lose.unity
+    guid: dd130127a4a67a04aa1d623aef60d7fa
   m_configObjects: {}
