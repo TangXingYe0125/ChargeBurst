@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHP : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PlayerHP : MonoBehaviour
     public int _kills = 0;
     public int _explodes = 0;
     private AudioSource _hit;
+    [SerializeField] private List<Image> _hearts = new List<Image>();
+    private int index = 4;
     private void Awake()
     {
         if (instance == null)
@@ -47,8 +50,17 @@ public class PlayerHP : MonoBehaviour
         {
             _hit.PlayOneShot(_hit.clip);
             _HP--;
+            GetDamage();
             _explodes++;
             Destroy(collision.gameObject);
         }
+    }
+
+
+    private void GetDamage()
+    {
+        index = Mathf.Max(index, 0);
+        _hearts[index].color = new Color(255, 255, 255, 0);
+        index--;
     }
 }

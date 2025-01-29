@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Attack : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Attack : MonoBehaviour
     [SerializeField] private AudioSource _normalAttack;
     [SerializeField] private AudioSource _chargeAttack;
     [SerializeField] private AudioSource _chargeReady;
-
+    [SerializeField] private Animator _swordAnimator;
     void Start()
     {
         anime = gameObject.GetComponent<Animator>();
@@ -29,15 +30,23 @@ public class Attack : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            power += Time.deltaTime;
+            power += Time.deltaTime;          
+        }
+        if(power >= 0.5f)
+        {
+            _swordAnimator.SetBool("DoAttack", false);
+            _swordAnimator.SetBool("GetCharge",true);
+            //var num = Mathf.PingPong(0.5f, 1.0f);
+            //_sword.color = new Color(1, 1, 1, num);
         }
         if (power >= 0.49f && power <= 0.50f)
-        {
-            //_chargeReady.PlayOneShot(_chargeReady.clip);
+        {          
             _chargeReady.Play();
         }
         if (power > 0 && Input.GetMouseButtonUp(0))
         {
+            _swordAnimator.SetBool("GetCharge", false);
+            _swordAnimator.SetBool("DoAttack", true);
             if (power < 0.5f)
             {
                 _normalAttack.PlayOneShot(_normalAttack.clip);
