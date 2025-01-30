@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,8 +16,12 @@ public class Attack : MonoBehaviour
     [SerializeField] private AudioSource _chargeAttack;
     [SerializeField] private AudioSource _chargeReady;
     [SerializeField] private Animator _swordAnimator;
+    public BoxCollider2D _hitBox;
+
+    private bool _canPlay;
     void Start()
     {
+        _canPlay = true;
         anime = gameObject.GetComponent<Animator>();
     }
     void Update()
@@ -36,8 +41,6 @@ public class Attack : MonoBehaviour
         {
             _swordAnimator.SetBool("DoAttack", false);
             _swordAnimator.SetBool("GetCharge",true);
-            //var num = Mathf.PingPong(0.5f, 1.0f);
-            //_sword.color = new Color(1, 1, 1, num);
         }
         if (power >= 0.49f && power <= 0.50f)
         {          
@@ -45,13 +48,21 @@ public class Attack : MonoBehaviour
         }
         if (power > 0 && Input.GetMouseButtonUp(0))
         {
+
             _swordAnimator.SetBool("GetCharge", false);
             _swordAnimator.SetBool("DoAttack", true);
             if (power < 0.5f)
             {
-                _normalAttack.PlayOneShot(_normalAttack.clip);
-                anime.SetTrigger("Attack");
-                Instantiate(UnseenBlade, AttackPoint.position, AttackPoint.rotation);
+                if (_canPlay == false)
+                {
+                    return;
+                }
+                else
+                {
+                    _normalAttack.PlayOneShot(_normalAttack.clip);
+                    anime.SetTrigger("Attack");
+                    _canPlay = false;
+                }
             }
             else if (power >= 0.5f)
             {
@@ -61,5 +72,22 @@ public class Attack : MonoBehaviour
             }
             power = 0.0f;
         }
+    }
+    public void EnableCollider()
+    {
+        _hitBox.enabled = true;
+    }
+    public void DisableCollider()
+    {
+        _hitBox.enabled = false;
+    }
+
+    public void IsEnd()
+    {
+        _canPlay = true;
+    }
+    public void GetStart()
+    {
+        _canPlay = false;
     }
 }

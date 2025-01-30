@@ -14,6 +14,9 @@ public class PlayerHP : MonoBehaviour
     private AudioSource _hit;
     [SerializeField] private List<Image> _hearts = new List<Image>();
     private int index = 4;
+
+    [SerializeField] private Animator _feedBack;
+    [SerializeField] private Animator _heartFade;
     private void Awake()
     {
         if (instance == null)
@@ -55,12 +58,12 @@ public class PlayerHP : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
-
-
     private void GetDamage()
     {
+        _feedBack.SetTrigger("isFeedBack");
         index = Mathf.Max(index, 0);
-        _hearts[index].color = new Color(255, 255, 255, 0);
+        _heartFade = _hearts[index].GetComponent<Animator>();
+        _heartFade.SetTrigger("Fade");
         index--;
     }
 }
