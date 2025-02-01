@@ -17,6 +17,10 @@ public class PlayerHP : MonoBehaviour
 
     [SerializeField] private Animator _feedBack;
     [SerializeField] private Animator _heartFade;
+
+    //[SerializeField] private float _flash;
+    //[SerializeField] private float _duration;
+    //[SerializeField] private SpriteRenderer _sr;
     private void Awake()
     {
         if (instance == null)
@@ -54,6 +58,7 @@ public class PlayerHP : MonoBehaviour
             _hit.PlayOneShot(_hit.clip);
             _HP--;
             GetDamage();
+            StartCoroutine(invincibility());
             _explodes++;
             Destroy(collision.gameObject);
         }
@@ -65,5 +70,19 @@ public class PlayerHP : MonoBehaviour
         _heartFade = _hearts[index].GetComponent<Animator>();
         _heartFade.SetTrigger("Fade");
         index--;
+    }
+
+    private IEnumerator invincibility()
+    {
+        Physics2D.IgnoreLayerCollision(9, 10, true);
+        //for(int i = 0; i < _flash; i++)
+        //{
+        //    _sr.color = Color.red;
+        //    yield return new WaitForSeconds(_duration / _flash);
+        //    _sr.color = Color.white;
+        //    yield return new WaitForSeconds(_duration / _flash);
+        //}
+        yield return new WaitForSeconds(1.0f);
+        Physics2D.IgnoreLayerCollision(9, 10, false);
     }
 }
