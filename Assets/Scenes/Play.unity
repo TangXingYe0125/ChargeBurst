@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14562,7 +14561,7 @@ GameObject:
   - component: {fileID: 895000398}
   m_Layer: 9
   m_Name: Long Sword
-  m_TagString: Untagged
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30031,6 +30030,7 @@ MonoBehaviour:
   - {fileID: 907286130}
   _feedBack: {fileID: 1618720154}
   _heartFade: {fileID: 0}
+  _isReady: 1
 --- !u!82 &1731761487
 AudioSource:
   m_ObjectHideFlags: 0

@@ -17,10 +17,7 @@ public class PlayerHP : MonoBehaviour
 
     [SerializeField] private Animator _feedBack;
     [SerializeField] private Animator _heartFade;
-
-    //[SerializeField] private float _flash;
-    //[SerializeField] private float _duration;
-    //[SerializeField] private SpriteRenderer _sr;
+    [SerializeField] private bool _isReady = true;
     private void Awake()
     {
         if (instance == null)
@@ -53,35 +50,31 @@ public class PlayerHP : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy")&& _isReady == true)
         {
+            _isReady = false;
             _hit.PlayOneShot(_hit.clip);
-            _HP--;
-            GetDamage();
+            StartCoroutine(GetDamage());
             StartCoroutine(invincibility());
             _explodes++;
             Destroy(collision.gameObject);
         }
     }
-    private void GetDamage()
+    private IEnumerator GetDamage()
     {
+        _HP--;
         _feedBack.SetTrigger("isFeedBack");
         index = Mathf.Max(index, 0);
         _heartFade = _hearts[index].GetComponent<Animator>();
         _heartFade.SetTrigger("Fade");
         index--;
+        yield return new WaitForSeconds(0.7f);
+        _isReady = true;
     }
 
     private IEnumerator invincibility()
     {
         Physics2D.IgnoreLayerCollision(9, 10, true);
-        //for(int i = 0; i < _flash; i++)
-        //{
-        //    _sr.color = Color.red;
-        //    yield return new WaitForSeconds(_duration / _flash);
-        //    _sr.color = Color.white;
-        //    yield return new WaitForSeconds(_duration / _flash);
-        //}
         yield return new WaitForSeconds(1.0f);
         Physics2D.IgnoreLayerCollision(9, 10, false);
     }
