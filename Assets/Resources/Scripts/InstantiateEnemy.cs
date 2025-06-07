@@ -8,6 +8,8 @@ public class InstantiateEnemy : MonoBehaviour
     public static InstantiateEnemy instance;
     [SerializeField] private GameObject Enemys;
     private float _creatTime = 3.0f;
+    private float _creatTimeMin = 0.1f;
+    private float _creatTimeMax = 1.0f;
     public int EnemyAmount;
     public int _totalAmount;
     public int _enemyLeft;
@@ -39,10 +41,10 @@ public class InstantiateEnemy : MonoBehaviour
             _creatTime -= Time.deltaTime;
             if (_creatTime <= 0)
             {
-                _creatTime = Random.Range(0.1f, 1.0f);          
+                _creatTime = Random.Range(_creatTimeMin, _creatTimeMax);          
                 Enemys.transform.position = _factoryPos[Random.Range(0,_factoryPos.Count)].position;
                 Instantiate(Enemys);
-                EnemyAmount -= 1;
+                EnemyAmount --;
             }
         }
     }

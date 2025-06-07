@@ -14559,7 +14559,7 @@ GameObject:
   - component: {fileID: 895000396}
   - component: {fileID: 895000397}
   - component: {fileID: 895000398}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Long Sword
   m_TagString: Sword
   m_Icon: {fileID: 0}
@@ -14594,9 +14594,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567046fe569dd37429e1e4e062b0e550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  burstPrefab: {fileID: 2360840737883257033, guid: caad99747d1b62a43a1dca2ee50b8b08, type: 3}
-  AttackPoint: {fileID: 1075105589}
-  UnseenBlade: {fileID: 5174217830546860634, guid: 8af499b85fd34e04395e46af1c700c4b, type: 3}
+  _burstPrefab: {fileID: 2360840737883257033, guid: caad99747d1b62a43a1dca2ee50b8b08, type: 3}
+  _attackPoint: {fileID: 1075105589}
   _normalAttack: {fileID: 895000396}
   _chargeAttack: {fileID: 895000397}
   _chargeReady: {fileID: 895000398}
@@ -15021,7 +15020,7 @@ GameObject:
   - component: {fileID: 947537336}
   - component: {fileID: 947537335}
   - component: {fileID: 947537337}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Sword
   m_TagString: Sword
   m_Icon: {fileID: 0}
@@ -30031,6 +30030,8 @@ MonoBehaviour:
   _feedBack: {fileID: 1618720154}
   _heartFade: {fileID: 0}
   _isReady: 1
+  _explosionRadius: 10
+  _explosionPower: 10
 --- !u!82 &1731761487
 AudioSource:
   m_ObjectHideFlags: 0

@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -354,8 +353,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5268003109708703659}
-        m_TargetAssemblyTypeName: DemoScript, Assembly-CSharp
-        m_MethodName: GoFade
+        m_TargetAssemblyTypeName: GoFade, Assembly-CSharp
+        m_MethodName: StartFade
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -804,8 +803,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 919749474}
-        m_TargetAssemblyTypeName: DemoScript, Assembly-CSharp
-        m_MethodName: GoFade
+        m_TargetAssemblyTypeName: GoFade, Assembly-CSharp
+        m_MethodName: StartFade
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

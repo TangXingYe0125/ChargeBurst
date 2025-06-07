@@ -6,18 +6,20 @@ using UnityEngine.UIElements;
 
 public class EnemyController : MonoBehaviour
 {
-    private Transform playerPos;
-    public float speed;
-    public int HP = 3;
+    private Transform _playerPos;
+    public float _speed;
+    public float _speedDownRate;
+    public int _hp = 3;
     private Rigidbody2D _rb;
     [SerializeField]private float _force;
     [SerializeField]private SpriteRenderer _sr;
     private float _time;
+    private float _damageTime = 0.4f;
     private Color NewColor;
     private void Start()
     {
         NewColor = _sr.color;
-        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
         _rb = GetComponent<Rigidbody2D>();
     }
     void FixedUpdate()
@@ -26,17 +28,17 @@ public class EnemyController : MonoBehaviour
         if (_sr.color.a == 0.5f)
         {
             _time += Time.deltaTime;
-            if (_time >= 0.4f)
+            if (_time >= _damageTime)
             {
                 NewColor.a = 1.0f;
                 _time = 0.0f;
             }
         }
-        if (HP > 0) 
+        if (_hp > 0) 
         { 
-            transform.position = Vector3.MoveTowards(transform.position, playerPos.position, speed);
+            transform.position = Vector3.MoveTowards(transform.position, _playerPos.position, _speed);
         }
-        else if(HP <= 0) 
+        else if(_hp <= 0) 
         {
             PlayerHP.instance._kills++;
             Destroy(this.gameObject);
@@ -46,19 +48,19 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Burst"))
         {
-            HP -= 3;            
+            _hp -= 3;            
         }
         if (collision.gameObject.CompareTag("Sword"))
         {
-            HP -= 1;
+            _hp -= 1;
             FeedBack();
-            speed -= 0.001f ;     
+            _speed -= 1.00f * _speedDownRate ;     
         }
     }
     private void FeedBack()
     {  
         NewColor.a = 0.5f;     
-        if (this.transform.position.x >= playerPos.position.x)
+        if (this.transform.position.x >= _playerPos.position.x)
         {
             _rb.AddForce(new Vector2(_force, 0.0f), ForceMode2D.Impulse);
         }
@@ -66,7 +68,7 @@ public class EnemyController : MonoBehaviour
         {
             _rb.AddForce(new Vector2(-_force, 0.0f), ForceMode2D.Impulse);
         }
-        if (this.transform.position.y >= playerPos.position.y)
+        if (this.transform.position.y >= _playerPos.position.y)
         {
             _rb.AddForce(new Vector2(0.0f, _force), ForceMode2D.Impulse);
         }

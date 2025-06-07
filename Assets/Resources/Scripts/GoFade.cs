@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
-public class DemoScript : MonoBehaviour {
+public class GoFade : MonoBehaviour {
     [SerializeField] private string scene;
     [SerializeField] private Color loadToColor;
 	
-	public void GoFade()
+	public void StartFade()
     {
         Initiate.Fade(scene, loadToColor, 1.0f);
     }

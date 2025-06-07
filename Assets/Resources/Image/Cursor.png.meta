@@ -1,12 +1,69 @@
 fileFormatVersion: 2
-guid: 56cdb01435272f64f923221450161d3b
+guid: 03dd1ef6fb163214c9e1ac0242dab3ba
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Gear_0
+  - first:
+      213: 21300002
+    second: Gear_1
+  - first:
+      213: 21300004
+    second: Gear_2
+  - first:
+      213: 21300006
+    second: Gear_3
+  - first:
+      213: 21300008
+    second: Gear_4
+  - first:
+      213: 21300010
+    second: Gear_5
+  - first:
+      213: 21300012
+    second: Gear_6
+  - first:
+      213: 21300014
+    second: Gear_7
+  - first:
+      213: 21300016
+    second: Gear_8
+  - first:
+      213: 21300018
+    second: Gear_9
+  - first:
+      213: 21300020
+    second: Gear_10
+  - first:
+      213: 21300022
+    second: Gear_11
+  - first:
+      213: 21300024
+    second: Gear_12
+  - first:
+      213: 21300026
+    second: Gear_13
+  - first:
+      213: 21300028
+    second: Gear_14
+  - first:
+      213: 21300030
+    second: Gear_15
+  - first:
+      213: 21300032
+    second: Gear_16
+  - first:
+      213: 21300034
+    second: Gear_17
+  - first:
+      213: 21300036
+    second: Gear_18
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -21,7 +78,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -34,8 +91,8 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
-    aniso: 16
+    filterMode: 0
+    aniso: 1
     mipBias: 0
     wrapU: 1
     wrapV: 1
@@ -43,18 +100,18 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 4
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 8
+  textureType: 7
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -94,7 +151,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Server
+    buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -120,7 +177,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: iPhone
+    buildTarget: VisionOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -173,7 +230,28 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Gear_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62305410000000000800000000000000
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -184,7 +262,26 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Gear_0: 21300000
+      Gear_1: 21300002
+      Gear_10: 21300020
+      Gear_11: 21300022
+      Gear_12: 21300024
+      Gear_13: 21300026
+      Gear_14: 21300028
+      Gear_15: 21300030
+      Gear_16: 21300032
+      Gear_17: 21300034
+      Gear_18: 21300036
+      Gear_2: 21300004
+      Gear_3: 21300006
+      Gear_4: 21300008
+      Gear_5: 21300010
+      Gear_6: 21300012
+      Gear_7: 21300014
+      Gear_8: 21300016
+      Gear_9: 21300018
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

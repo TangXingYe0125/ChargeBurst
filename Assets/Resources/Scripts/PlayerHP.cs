@@ -6,18 +6,20 @@ using UnityEngine.UI;
 public class PlayerHP : MonoBehaviour
 {
     public static PlayerHP instance;
-    [SerializeField] private DemoScript _loseScript;
-    [SerializeField] private DemoScript _winScript;
+    [SerializeField] private GoFade _loseScript;
+    [SerializeField] private GoFade _winScript;
     public int _HP; 
     public int _kills = 0;
     public int _explodes = 0;
     private AudioSource _hit;
     [SerializeField] private List<Image> _hearts = new List<Image>();
-    private int index = 4;
+    private int _index = 4;
 
     [SerializeField] private Animator _feedBack;
     [SerializeField] private Animator _heartFade;
     [SerializeField] private bool _isReady = true;
+    [SerializeField] private float _explosionRadius;
+    [SerializeField] private float _explosionPower;
     private void Awake()
     {
         if (instance == null)
@@ -41,11 +43,11 @@ public class PlayerHP : MonoBehaviour
     {
         if (_HP <= 0)
         {
-            _loseScript.GoFade();
+            _loseScript.StartFade();
         }
         if(InstantiateEnemy.instance._enemyLeft == 0 || Timer._time <= 0.00f)
         {
-            _winScript.GoFade();
+            _winScript.StartFade();
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -62,12 +64,24 @@ public class PlayerHP : MonoBehaviour
     }
     private IEnumerator GetDamage()
     {
+        Vector3 _explosionPos = transform.position;
+        Collider[] _enemies = Physics.OverlapSphere(_explosionPos, _explosionRadius);//Point!
+
+        foreach (Collider _hit in _enemies)
+        {
+            Rigidbody _rb = _hit.GetComponent<Rigidbody>();
+
+            if (_rb != null)
+            {
+                _rb.AddExplosionForce(_explosionPower, _explosionPos, _explosionRadius, 8f, ForceMode.Impulse);
+            }
+        }
         _HP--;
         _feedBack.SetTrigger("isFeedBack");
-        index = Mathf.Max(index, 0);
-        _heartFade = _hearts[index].GetComponent<Animator>();
+        _index = Mathf.Max(_index, 0);
+        _heartFade = _hearts[_index].GetComponent<Animator>();
         _heartFade.SetTrigger("Fade");
-        index--;
+        _index--;
         yield return new WaitForSeconds(0.7f);
         _isReady = true;
     }

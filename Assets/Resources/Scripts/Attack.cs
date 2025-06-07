@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 public class Attack : MonoBehaviour
 {
-    private Animator anime;
-    private float power = 0.0f;
-    [SerializeField] private GameObject burstPrefab;
-    [SerializeField] private Transform AttackPoint;
-    [SerializeField] private GameObject UnseenBlade;
+    private Animator _anime;
+    private float _power;
+    private float _chargePoint = 0.5f;
+    [SerializeField] private GameObject _burstPrefab;
+    [SerializeField] private Transform _attackPoint;
     [SerializeField] private AudioSource _normalAttack;
     [SerializeField] private AudioSource _chargeAttack;
     [SerializeField] private AudioSource _chargeReady;
@@ -21,8 +21,9 @@ public class Attack : MonoBehaviour
     private bool _canPlay;
     void Start()
     {
+        _power = 0.0f;
         _canPlay = true;
-        anime = gameObject.GetComponent<Animator>();
+        _anime = gameObject.GetComponent<Animator>();
     }
     void Update()
     {
@@ -35,23 +36,23 @@ public class Attack : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            power += Time.deltaTime;          
+            _power += Time.deltaTime;          
         }
-        if(power >= 0.5f)
+        if(_power >= _chargePoint)
         {
             _swordAnimator.SetBool("DoAttack", false);
             _swordAnimator.SetBool("GetCharge",true);
         }
-        if (power >= 0.49f && power <= 0.50f)
+        if (_power >= 0.49f && _power <= _chargePoint)
         {          
             _chargeReady.Play();
         }
-        if (power > 0 && Input.GetMouseButtonUp(0))
+        if (_power > 0 && Input.GetMouseButtonUp(0))
         {
 
             _swordAnimator.SetBool("GetCharge", false);
             _swordAnimator.SetBool("DoAttack", true);
-            if (power < 0.5f)
+            if (_power < _chargePoint)
             {
                 if (_canPlay == false)
                 {
@@ -60,17 +61,17 @@ public class Attack : MonoBehaviour
                 else
                 {
                     _normalAttack.PlayOneShot(_normalAttack.clip);
-                    anime.SetTrigger("Attack");
+                    _anime.SetTrigger("Attack");
                     _canPlay = false;
                 }
             }
-            else if (power >= 0.5f)
+            else if (_power >= _chargePoint)
             {
                 _chargeAttack.PlayOneShot(_chargeAttack.clip);
-                anime.SetTrigger("Charge Attack");
-                Instantiate(burstPrefab, AttackPoint.position, AttackPoint.rotation);
+                _anime.SetTrigger("Charge Attack");
+                Instantiate(_burstPrefab, _attackPoint.position, _attackPoint.rotation);
             }
-            power = 0.0f;
+            _power = 0.0f;
         }
     }
     public void EnableCollider()
@@ -81,7 +82,6 @@ public class Attack : MonoBehaviour
     {
         _hitBox.enabled = false;
     }
-
     public void IsEnd()
     {
         _canPlay = true;
