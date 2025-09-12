@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class burst : MonoBehaviour
+public class Burst : MonoBehaviour
 {
     [SerializeField] private float force;
     private Rigidbody2D rbody;

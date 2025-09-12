@@ -1,33 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using static UnityEngine.RuleTile.TilingRuleOutput;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Vector3 _currentInput;
-    public float _speed;
-    private float TempX = 0.0f;
-    private float TempY = 0.0f;
-    [SerializeField] private float EdgeX;
-    [SerializeField] private float EdgeY;
-
-    void FixedUpdate()
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private float speed;
+    private Vector2 input;
+    void Update()
     {
-        Debug.Log(transform.forward);
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        _currentInput = new Vector3(horizontal, vertical, 0);
+        input = new Vector2(horizontal, vertical).normalized;
+    }
+    void FixedUpdate()
+    {
+        rb.velocity = input * speed;
 
-        transform.position += _currentInput * _speed;
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorld.z = 0f; 
 
-        TempX = Mathf.Clamp(transform.position.x, -EdgeX, EdgeX);
-        TempY = Mathf.Clamp(transform.position.y, -EdgeY, EdgeY);
-        transform.position = new Vector3(TempX, TempY, transform.position.z);
-
-        var pos = Camera.main.WorldToScreenPoint(transform.localPosition);
-        var rotation = Quaternion.LookRotation(Vector3.forward, Input.mousePosition - pos);
-        transform.localRotation = rotation;       
+        Vector2 direction = new Vector2(mouseWorld.x, mouseWorld.y) - rb.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90.0f;
+        rb.MoveRotation(angle);
     }
 }
