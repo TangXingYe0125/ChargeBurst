@@ -7,75 +7,65 @@ using UnityEngine.UIElements;
 public class EnemyController : MonoBehaviour
 {
     private Transform _playerPos;
-    public float _speed;
-    public float _speedDownRate;
+    [SerializeField] private float _speed;
     public int _hp = 3;
     private Rigidbody2D _rb;
     [SerializeField]private float _force;
     [SerializeField]private SpriteRenderer _sr;
-    private float _time;
-    private float _damageTime = 0.4f;
+    [SerializeField]private float _damageTime;
     private Color NewColor;
+    private Vector2 _knockbackVelocity;
+    private bool _isFeedingBack;
     private void Start()
     {
         NewColor = _sr.color;
         _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
         _rb = GetComponent<Rigidbody2D>();
+        _isFeedingBack = false;
     }
-    void FixedUpdate()
+
+    private void FixedUpdate()
     {
-        _sr.color = NewColor;
-        if (_sr.color.a == 0.5f)
+        if (_hp > 0 && !_isFeedingBack)
         {
-            _time += Time.deltaTime;
-            if (_time >= _damageTime)
-            {
-                NewColor.a = 1.0f;
-                _time = 0.0f;
-            }
+            Vector2 direction = (_playerPos.position - transform.position).normalized;
+            _rb.velocity = direction * _speed;
         }
-        if (_hp > 0) 
-        { 
-            transform.position = Vector3.MoveTowards(transform.position, _playerPos.position, _speed);
-        }
-        else if(_hp <= 0) 
+        else if(_hp <= 0)
         {
+            _rb.velocity = Vector2.zero;
             PlayerHP.instance._kills++;
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Burst"))
+        if (collision.CompareTag("Burst"))
         {
-            _hp -= 3;            
+            _hp -= 3;
         }
-        if (collision.gameObject.CompareTag("Sword"))
+        else if (collision.CompareTag("Sword"))
         {
             _hp -= 1;
-            FeedBack();
-            _speed -= 1.00f * _speedDownRate ;     
+            StartCoroutine(FeedBack());
         }
     }
-    private void FeedBack()
-    {  
-        NewColor.a = 0.5f;     
-        if (this.transform.position.x >= _playerPos.position.x)
-        {
-            _rb.AddForce(new Vector2(_force, 0.0f), ForceMode2D.Impulse);
-        }
-        else
-        {
-            _rb.AddForce(new Vector2(-_force, 0.0f), ForceMode2D.Impulse);
-        }
-        if (this.transform.position.y >= _playerPos.position.y)
-        {
-            _rb.AddForce(new Vector2(0.0f, _force), ForceMode2D.Impulse);
-        }
-        else
-        {
-            _rb.AddForce(new Vector2(0.0f, -_force), ForceMode2D.Impulse);
-        }
+    private IEnumerator FeedBack()
+    {
+        _isFeedingBack = true;
+        Vector2 knockbackDir = (transform.position - _playerPos.position).normalized;
+        _knockbackVelocity = knockbackDir * _force;
+        _rb.AddForce(knockbackDir * _force, ForceMode2D.Impulse);
+        Physics2D.IgnoreLayerCollision(10, 10, true);
+        NewColor.a = 0.5f;
+        _sr.color = NewColor;
+
+        yield return new WaitForSeconds(_damageTime);
+
+        NewColor.a = 1.0f;
+        _sr.color = NewColor;
+        _isFeedingBack = false;
+        Physics2D.IgnoreLayerCollision(10, 10, false);
     }
 }
 
