@@ -1256,7 +1256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0b7c05be4ac45468d6e5438f5c89d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: Main Stage
+  scene: Tutorial Stage
   loadToColor: {r: 0.18343261, g: 0.09313814, b: 0.8584906, a: 1}
 --- !u!82 &919749475
 AudioSource:
