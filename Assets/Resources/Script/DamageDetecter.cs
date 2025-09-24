@@ -20,6 +20,7 @@ public class DamageDetecter : MonoBehaviour
 
         if (collision.CompareTag("Enemy") && PlayerHP.instance._isReady)
         {
+            PlayerHP.instance._isReady = false;
             PlayerHP.instance._isEnemy = true;
             EnemyController enemyController = collision.GetComponent<EnemyController>();
             PlayerHP.instance._damage = enemyController._atk;

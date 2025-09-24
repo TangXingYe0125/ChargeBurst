@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,18 +19,16 @@ public class InstantiateEnemy : MonoBehaviour
     public int _enemyAmount;
     public int _totalAmount;
     public int _enemyLeft;
-
     private void Awake()
     {
         if (instance == null) instance = this;
         else if (instance != this) Destroy(gameObject);
     }
-
     private void Start()
     {
         _totalAmount = _enemyAmount;
+        _enemyLeft = _totalAmount;
     }
-
     private void Update()
     {
         _enemyLeft = _totalAmount - PlayerHP.instance._kills - PlayerHP.instance._explodes;
@@ -38,6 +37,10 @@ public class InstantiateEnemy : MonoBehaviour
             return;
         }
         Instantiate();
+        if (_enemyLeft <= 0)
+        {
+            GameStateManager.instance.SetState(GameState.Victory);
+        }
     }
     protected virtual void Instantiate()
     {

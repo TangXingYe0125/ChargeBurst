@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using System.Threading.Tasks;
 
 public class PlayerHP : MonoBehaviour
 {
     public static PlayerHP instance;
     public int _HP; 
+    public int _maxHP = 5; 
     public int _kills = 0;
     public int _explodes = 0;
 
@@ -19,6 +22,7 @@ public class PlayerHP : MonoBehaviour
     public bool _isReady = true;
     public bool _isEnemy = false;
     public int _damage;
+
     private void Awake()
     {
         if (instance == null)
@@ -31,12 +35,12 @@ public class PlayerHP : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-            //DontDestroyOnLoad(gameObject);
         }
     }
     private void Start()
     {
         _hit = GetComponent<AudioSource>();
+        _HP = _maxHP;
     }
     private void Update()
     {
@@ -46,26 +50,36 @@ public class PlayerHP : MonoBehaviour
     {
         if (_isEnemy)
         {
-            _isReady = false;
             _hit.PlayOneShot(_hit.clip);
-            StartCoroutine(GetDamage());
+            HandleEnemyHit();
             StartCoroutine(invincibility());
             _explodes++;
             _isEnemy = false;
         }
     }
-    private IEnumerator GetDamage()
+    private async Task GetDamageAsync()
     {
         _HP -= _damage;
-        _feedBack.SetTrigger("isFeedBack");
-        for(int i = 0; i < _damage; i++)
+        for (int i = 0; i < _damage; i++)
         {
             _index = Mathf.Max(_index, 0);
             _heartFade = _hearts[_index].GetComponent<Animator>();
             _heartFade.SetTrigger("Fade");
             _index--;
-        }     
-        yield return new WaitForSeconds(0.7f);
+        }
+
+        if (_HP > 0)
+        {
+            _feedBack.SetTrigger("isFeedBack");
+        }
+        else
+        {
+            GameStateManager.instance.SetState(GameState.GameOver);
+            return;
+        }
+
+        
+        await Task.Delay(700);
         _damage = 0;
         _isReady = true;
     }
@@ -74,5 +88,10 @@ public class PlayerHP : MonoBehaviour
         Physics2D.IgnoreLayerCollision(9, 10, true);
         yield return new WaitForSeconds(1.0f);
         Physics2D.IgnoreLayerCollision(9, 10, false);
+    }
+
+    private async void HandleEnemyHit()
+    {
+        await GetDamageAsync();
     }
 }

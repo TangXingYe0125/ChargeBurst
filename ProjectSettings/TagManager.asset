@@ -9,6 +9,7 @@ TagManager:
   - Sword
   - Map
   - Zone
+  - PlayerBody
   layers:
   - Default
   - TransparentFX
