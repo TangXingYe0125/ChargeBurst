@@ -24,6 +24,9 @@ public class EnemyController : MonoBehaviour
     protected float _waitTime = 1.0f;
     protected float _waitT = 0.0f;
 
+    private float _damageCooldown = 0.2f;
+    private float _lastHitTime;
+
     [SerializeField] protected Animator _animator;
     public bool _isKnockedBack;
     private void Awake()
@@ -42,6 +45,7 @@ public class EnemyController : MonoBehaviour
         _state = EnemyState.Idle;
         _isFeedingBack = false;
         _isKnockedBack = false;
+        _lastHitTime = -1f;
     }
 
     private void FixedUpdate()
@@ -58,16 +62,20 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
+        if (Time.time - _lastHitTime < _damageCooldown) return;
+
         if (collision.CompareTag("Burst"))
         {
             _hp -= 3;
             _animator.SetTrigger("Hit");
+            _lastHitTime = Time.time;
         }
         else if (collision.CompareTag("Sword"))
         {
             _hp -= 1;
             _animator.SetTrigger("Hit");
             StartCoroutine(FeedBack());
+            _lastHitTime = Time.time;
         }
     }
     protected virtual void Track()

@@ -9,7 +9,8 @@ public class Attack : MonoBehaviour
 {
     private Animator _anime;
     private float _power;
-    private float _chargePoint = 0.5f;
+    private float _chargePoint = 0.7f;
+    private float _chargeAnimePoint = 0.2f;
     [SerializeField] private GameObject _burstPrefab;
     [SerializeField] private Transform _attackPoint;
     [SerializeField] private AudioSource _normalAttack;
@@ -19,36 +20,44 @@ public class Attack : MonoBehaviour
     public BoxCollider2D _hitBox;
 
     private bool _canPlay;
+    private PlayerMovement _playerMovement;
+
+    [SerializeField] private ParticleSystem _chargeParticle;
+    private bool chargeParticlePlayed = false;
+    [SerializeField] private ParticleSystem _slashParticle;
     void Start()
     {
         _power = 0.0f;
         _canPlay = true;
         _anime = gameObject.GetComponent<Animator>();
+        _playerMovement = gameObject.GetComponentInParent<PlayerMovement>();
     }
     void Update()
     {
-        Vector3 display = Camera.main.WorldToScreenPoint(transform.position);
-        Vector2 vector = Input.mousePosition - display;
-        transform.LookAt(vector);
-        Fire(vector);
+        HandleRotation();
+        Fire();
     }
-    private void Fire(Vector2 vector)
+    private void Fire()
     {
         if (Input.GetMouseButton(0))
         {
             _power += Time.deltaTime;          
         }
-        if(_power >= _chargePoint)
+        if (_power >= _chargeAnimePoint && !chargeParticlePlayed)
         {
-            _swordAnimator.SetBool("DoAttack", false);
-            _swordAnimator.SetBool("GetCharge",true);
+            _chargeParticle.Play();
+            chargeParticlePlayed = true;           
         }
-        if (_power >= 0.49f && _power <= _chargePoint)
-        {          
+        if (Mathf.Abs(_power - _chargePoint) <= 0.02f)
+        {           
+            _swordAnimator.SetBool("DoAttack", false);
+            _swordAnimator.SetBool("GetCharge", true);
             _chargeReady.Play();
         }
         if (_power > 0 && Input.GetMouseButtonUp(0))
         {
+            _chargeParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            chargeParticlePlayed = false;
 
             _swordAnimator.SetBool("GetCharge", false);
             _swordAnimator.SetBool("DoAttack", true);
@@ -82,12 +91,25 @@ public class Attack : MonoBehaviour
     {
         _hitBox.enabled = false;
     }
-    public void IsEnd()
-    {
-        _canPlay = true;
-    }
     public void GetStart()
     {
         _canPlay = false;
+
+        _playerMovement.StartAttack();
+        _slashParticle.Play();
     }
+    public void IsEnd()
+    {
+        _canPlay = true;
+        _playerMovement.EndAttack();
+        _slashParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+    }
+    private void HandleRotation()
+    {
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 dir = mouseWorld - transform.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
 }

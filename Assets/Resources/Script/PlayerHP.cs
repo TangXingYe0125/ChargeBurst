@@ -18,10 +18,10 @@ public class PlayerHP : MonoBehaviour
     private int _index = 4;
 
     [SerializeField] private Animator _feedBack;
-    [SerializeField] private Animator _heartFade;
-    public bool _isReady = true;
-    public bool _isEnemy = false;
-    public int _damage;
+    private Animator _heartFade;
+    [HideInInspector] public bool _isReady = true;
+    [HideInInspector] public bool _isEnemy = false;
+    [HideInInspector] public int _damage;
 
     private void Awake()
     {
@@ -67,18 +67,12 @@ public class PlayerHP : MonoBehaviour
             _heartFade.SetTrigger("Fade");
             _index--;
         }
-
-        if (_HP > 0)
-        {
-            _feedBack.SetTrigger("isFeedBack");
-        }
-        else
+        _feedBack.SetTrigger("isFeedBack");
+        if (_HP <= 0)
         {
             GameStateManager.instance.SetState(GameState.GameOver);
             return;
-        }
-
-        
+        }        
         await Task.Delay(700);
         _damage = 0;
         _isReady = true;

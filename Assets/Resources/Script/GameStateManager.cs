@@ -26,23 +26,35 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] private SpriteRenderer _playerSR;
     [SerializeField] private SpriteRenderer _weaponSR;
-    private Material _dieMaterial;
+    [SerializeField] private Material _dieMaterial;
     [SerializeField] private ParticleSystem _dieParticle;
     private Material _weaponDieMaterial;
     [SerializeField] private ParticleSystem _weaponDieParticle;
+    [SerializeField] private Animator _playerAnimator;
 
     public GameState CurrentState { get; private set; } = GameState.Playing;
 
+    [SerializeField] private GameObject _pausePanel;
     private void Awake()
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
+        _dieMaterial.SetFloat("_Strength", 1.0f);
     }
 
     private void Start()
     {
-        _dieMaterial = _playerSR.material;
         _weaponDieMaterial = _weaponSR.material;
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+        {
+            if (CurrentState == GameState.Paused)
+                ResumeGame();
+            else
+                PauseGame();
+        }
     }
     public async void SetState(GameState newState)
     {
@@ -71,18 +83,21 @@ public class GameStateManager : MonoBehaviour
 
     private void PauseGame()
     {
-        Time.timeScale = 0f; // Í£Ö¹Ê±¼ä
-        // UIManager.ShowPauseMenu();
+        _pausePanel.SetActive(true);
+        Time.timeScale = 0f;
+        CurrentState = GameState.Paused;
     }
     private void ResumeGame()
     {
+        _pausePanel.SetActive(false);
         Time.timeScale = 1f;
-        // UIManager.HidePauseMenu();
+        CurrentState = GameState.Playing;
     }
 
     private async Task HandleGameOver()
     {
         FreezePlayer();
+        _playerSR.GetComponent<Renderer>().material = _dieMaterial;
 
         var playerTween = _dieMaterial.DOFloat(-1, "_Strength", 3.0f);
         var weaponTween = _weaponDieMaterial.DOFloat(-1, "_Strength", 3.0f);
@@ -99,7 +114,7 @@ public class GameStateManager : MonoBehaviour
     private async Task HandleVictory()
     {
         FreezePlayer();
-
+        _playerAnimator.SetTrigger("isStageClear");
 
         await Task.Delay(1000);// wait for 1.0f
 

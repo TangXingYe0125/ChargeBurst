@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class Burst : MonoBehaviour
 {
-    [SerializeField] private float force;
-    private Rigidbody2D rbody;
-    [SerializeField] private float _speed;
-
+    private Rigidbody2D _rb;
+    [SerializeField] private float _force;
     void Awake()
     {
-        rbody = GetComponent<Rigidbody2D>();
-        rbody.velocity = transform.right * force;
-    }
-    void Update()
-    {
-        this.transform.localScale *= 1 + Time.deltaTime * _speed;
-        Destroy(this.gameObject,1.0f);
+        _rb = GetComponent<Rigidbody2D>();
+        _rb.velocity = transform.right * _force;
+        Destroy(this.gameObject, 0.5f);
     }
 }
