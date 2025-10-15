@@ -15,12 +15,11 @@ public class UIMove : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         _rectTransform.DOKill();
-        _rectTransform.DOScale(_scale * new Vector3(1.2f, 1.2f, 0f), 0.5f).SetEase(Ease.InOutCirc);
+        _rectTransform.DOScale(_scale * new Vector3(1.2f, 1.2f, 0f), 0.5f).SetEase(Ease.InOutCirc).SetUpdate(true);
     }
     public void OnPointerExit(PointerEventData eventData)
     {
         _rectTransform.DOKill();
-        _rectTransform.DOScale(_scale * new Vector3(1.0f, 1.0f, 0f), 0.5f).SetEase(Ease.InOutCirc);
+        _rectTransform.DOScale(_scale * new Vector3(1.0f, 1.0f, 0f), 0.5f).SetEase(Ease.InOutCirc).SetUpdate(true);
     }
-    
 }

@@ -9,9 +9,7 @@ public class ResultKills : MonoBehaviour
     void Start()
     {
         _text = GetComponent<TextMeshProUGUI>();
-    }
-    void FixedUpdate()
-    {
-        _text.text = "Kills:" + PlayerHP.instance._kills + "/" + InstantiateEnemy.instance._totalAmount;
+        _text.text = "Kills:" + Kills.instance._kills + "/" + Kills.instance._lastTimeEnemyAmount;
     }
 }
+

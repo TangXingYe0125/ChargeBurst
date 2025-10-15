@@ -3,6 +3,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Transactions;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum GameState
 {
@@ -16,10 +17,8 @@ public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager instance;
 
-    [Header("场景管理")]
     [SerializeField] private SceneController _sceneController;
 
-    [Header("玩家相关")]
     [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private DamageDetecter _damageDetecter;
     [SerializeField] private Attack _attack;
@@ -34,17 +33,25 @@ public class GameStateManager : MonoBehaviour
 
     public GameState CurrentState { get; private set; } = GameState.Playing;
 
-    [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private GameObject _pauseMenu;
+    [SerializeField] private GameObject _volumeControl;
+    [SerializeField] private GameObject _menu;
     private void Awake()
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
-        _dieMaterial.SetFloat("_Strength", 1.0f);
+        _dieMaterial.SetFloat("_Dissolve", 0.0f);
+    }
+    private void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
     }
 
     private void Start()
     {
         _weaponDieMaterial = _weaponSR.material;
+        _pauseMenu.SetActive(false);
     }
     private void Update()
     {
@@ -83,24 +90,33 @@ public class GameStateManager : MonoBehaviour
 
     private void PauseGame()
     {
-        _pausePanel.SetActive(true);
+        _pauseMenu.SetActive(true);
+        _menu.SetActive(true);
+        _volumeControl.SetActive(false);
+
+        foreach (Button btn in _pauseMenu.GetComponentsInChildren<Button>(true))
+        {
+            btn.transform.DOKill();
+            btn.transform.localScale = Vector3.one;
+        }
         Time.timeScale = 0f;
         CurrentState = GameState.Paused;
     }
     private void ResumeGame()
     {
-        _pausePanel.SetActive(false);
+        _pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         CurrentState = GameState.Playing;
     }
 
     private async Task HandleGameOver()
     {
+        Kills.instance.GetAmount();
         FreezePlayer();
         _playerSR.GetComponent<Renderer>().material = _dieMaterial;
 
-        var playerTween = _dieMaterial.DOFloat(-1, "_Strength", 3.0f);
-        var weaponTween = _weaponDieMaterial.DOFloat(-1, "_Strength", 3.0f);
+        var playerTween = _dieMaterial.DOFloat(1, "_Dissolve", 3.0f);
+        var weaponTween = _weaponDieMaterial.DOFloat(1, "_Dissolve", 3.0f);
 
         _dieParticle.Play();
         _weaponDieParticle.Play();
@@ -113,11 +129,11 @@ public class GameStateManager : MonoBehaviour
     }
     private async Task HandleVictory()
     {
+        Kills.instance.GetAmount();
         FreezePlayer();
         _playerAnimator.SetTrigger("isStageClear");
 
         await Task.Delay(1000);// wait for 1.0f
-
 
         await _sceneController.LoadScene(_sceneController._currentSceneNum + 1);
     }
@@ -139,6 +155,10 @@ public class GameStateManager : MonoBehaviour
         _playerMovement.enabled = false;
         _damageDetecter.enabled = false;
         _attack.enabled = false;
-
+    }
+    public async void PauseMenuBackToTitle()
+    {
+        if (EventTrigger._isEventTriggerReady) return;
+        await _sceneController.LoadScene(0);
     }
 }

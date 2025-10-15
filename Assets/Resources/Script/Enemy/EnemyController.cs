@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
     protected float _waitTime = 1.0f;
     protected float _waitT = 0.0f;
 
-    private float _damageCooldown = 0.2f;
+    private float _damageCooldown = 0.1f;
     private float _lastHitTime;
 
     [SerializeField] protected Animator _animator;
@@ -50,6 +50,11 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameStateManager.instance.CurrentState != GameState.Playing)
+        {
+            _rb.velocity = Vector2.zero;
+            return;
+        }
         Track();
         TurnDirection();
     }
@@ -85,7 +90,7 @@ public class EnemyController : MonoBehaviour
         if (_hp <= 0)
         {
             _rb.velocity = Vector2.zero;
-            PlayerHP.instance._kills++;
+            Kills.instance._kills++;
 
             _animator.SetTrigger("Die");
 

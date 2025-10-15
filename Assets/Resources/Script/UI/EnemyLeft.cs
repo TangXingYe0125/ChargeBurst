@@ -6,8 +6,9 @@ using UnityEngine;
 public class EnemyLeft : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
-    void FixedUpdate()
+    [SerializeField] private InstantiateEnemy _instantiateEnemy;
+    void Update()
     {
-        _text.text = "EnemyLeft:" + InstantiateEnemy.instance._enemyLeft + "/" + InstantiateEnemy.instance._totalAmount;
+        _text.text = "EnemyLeft:" + _instantiateEnemy._enemyLeft + "/" + _instantiateEnemy._totalAmount;
     }
 }

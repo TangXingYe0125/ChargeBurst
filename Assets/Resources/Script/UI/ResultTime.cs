@@ -9,9 +9,6 @@ public class ResultTime : MonoBehaviour
     void Start()
     {
         _text = GetComponent<TextMeshProUGUI>();
-    }
-    void Update()
-    {
         _text.text = "Time:" + (Timer.instance._time).ToString("F2");
     }
 }

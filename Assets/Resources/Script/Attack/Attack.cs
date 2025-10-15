@@ -34,6 +34,15 @@ public class Attack : MonoBehaviour
     }
     void Update()
     {
+        if (GameStateManager.instance.CurrentState != GameState.Playing)
+        {
+            _swordAnimator.speed = 0.0f;
+            return;
+        }
+        else
+        {
+            _swordAnimator.speed = 1.0f;
+        }
         HandleRotation();
         Fire();
     }
@@ -94,13 +103,19 @@ public class Attack : MonoBehaviour
     public void GetStart()
     {
         _canPlay = false;
-
-        _playerMovement.StartAttack();
-        _slashParticle.Play();
     }
     public void IsEnd()
     {
         _canPlay = true;
+    }
+
+    public void SlashEffectStart()
+    {
+        _playerMovement.StartAttack();
+        _slashParticle.Play();
+    }
+    public void SlashEffectEnd()
+    {
         _playerMovement.EndAttack();
         _slashParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
@@ -111,5 +126,4 @@ public class Attack : MonoBehaviour
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
-
 }

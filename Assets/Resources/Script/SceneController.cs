@@ -16,53 +16,60 @@ public class SceneController : MonoBehaviour
     private void Awake()
     {
         _sceneChangeMaterial = _targetImage.material;
-        _sceneChangeMaterial.SetFloat("_Slider", 1.0f);
-        _ = BeginScene();
+        _sceneChangeMaterial.SetFloat("_Slider", 0.0f);
+        //_ = BeginScene();
         _isLoading = false;
         _currentSceneNum = SceneManager.GetActiveScene().buildIndex;
+        Time.timeScale = 1.0f;
     }
-
     public async Task BeginScene()
     {
-        Debug.Log("开始初期加载");
         EventTrigger._isEventTriggerReady = true;
-        await _sceneChangeMaterial.DOFloat(0, "_Slider", 2.0f).AsyncWaitForCompletion();
+        Physics2D.IgnoreLayerCollision(9, 10, false);
+        await _sceneChangeMaterial.DOFloat(0, "_Slider", 2.0f).SetUpdate(true).AsyncWaitForCompletion();
         EventTrigger._isEventTriggerReady = false;
-        Debug.Log("初期加载完成");
     }
-
     public async Task LoadScene(int _SceneNum)
     {
         EventTrigger._isEventTriggerReady = true;
         if (_isLoading) return;
 
         _isLoading = true;
-        Debug.Log("开始加载新场景");
-        await _sceneChangeMaterial.DOFloat(1, "_Slider", 2.0f).AsyncWaitForCompletion();
+
+        await _sceneChangeMaterial.DOFloat(1, "_Slider", 2f).SetUpdate(true).AsyncWaitForCompletion();
 
         AsyncOperation loadOp = SceneManager.LoadSceneAsync(_SceneNum);
         loadOp.allowSceneActivation = true;
         while (!loadOp.isDone)
-        {
             await Task.Yield();
+
+        SceneController newSceneCtrl = FindObjectOfType<SceneController>();
+        if (newSceneCtrl != null)
+        {
+            newSceneCtrl._sceneChangeMaterial.SetFloat("_Slider", 1.0f);
+            await newSceneCtrl.BeginScene();
         }
-        Debug.Log("新场景加载完成");
+
         EventTrigger._isEventTriggerReady = false;
+        _isLoading = false;
     }
 
     public async void BackToTitle()
     {
         if(EventTrigger._isEventTriggerReady) return;
+        Kills.instance.ResetKills();
         await LoadScene(0);
     }
     public async void TryAgain()
     {
         if (EventTrigger._isEventTriggerReady) return;
+        Kills.instance.ResetKills();
         await LoadScene(GameProgress.LastLevelIndex);
     }
     public async void NextStage()
     {
         if (EventTrigger._isEventTriggerReady) return;
+        Kills.instance.ResetKills();
         await LoadScene(_currentSceneNum + 1);
     }
 }
