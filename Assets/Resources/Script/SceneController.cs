@@ -72,4 +72,11 @@ public class SceneController : MonoBehaviour
         Kills.instance.ResetKills();
         await LoadScene(_currentSceneNum + 1);
     }
+
+    public async void TestStage()
+    {
+        if (EventTrigger._isEventTriggerReady) return;
+        Kills.instance.ResetKills();
+        await LoadScene(3);
+    }
 }

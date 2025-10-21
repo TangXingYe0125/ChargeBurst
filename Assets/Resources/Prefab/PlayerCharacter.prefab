@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 7989241773994451577}
   - component: {fileID: 8606345767997289913}
   - component: {fileID: 4470080059767730931}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sword
   m_TagString: Sword
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 7290464847470924594}
   - component: {fileID: 3401222292493314357}
   - component: {fileID: 1217011531534324519}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Long Sword
   m_TagString: Sword
   m_Icon: {fileID: 0}
@@ -20319,8 +20319,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.25866985, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 6cc3e5f3319b8764080c492fe415882f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

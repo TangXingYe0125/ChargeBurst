@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float _force;
     [SerializeField] private float _damageTime;
     private bool _isFeedingBack;
-    protected enum EnemyState { Idle, Chase, Wait, Return }
+    protected enum EnemyState { Idle, Chase, Wait, Return, Hurt }
     protected EnemyState _state;
 
     protected Transform _playerPos;
@@ -50,6 +50,7 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Debug.Log(_state);
         if (GameStateManager.instance.CurrentState != GameState.Playing)
         {
             _rb.velocity = Vector2.zero;
@@ -74,6 +75,7 @@ public class EnemyController : MonoBehaviour
             _hp -= 3;
             _animator.SetTrigger("Hit");
             _lastHitTime = Time.time;
+            EnterHurtState();
         }
         else if (collision.CompareTag("Sword"))
         {
@@ -81,6 +83,7 @@ public class EnemyController : MonoBehaviour
             _animator.SetTrigger("Hit");
             StartCoroutine(FeedBack());
             _lastHitTime = Time.time;
+            EnterHurtState();
         }
     }
     protected virtual void Track()
@@ -102,6 +105,7 @@ public class EnemyController : MonoBehaviour
         {
             _state = EnemyState.Chase;
         }
+
         switch (_state)
         {
             case EnemyState.Idle:
@@ -171,6 +175,19 @@ public class EnemyController : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
         _isKnockedBack = false;
+    }
+
+    protected virtual void EnterHurtState()
+    {
+        if (_state == EnemyState.Hurt) return;
+
+        _state = EnemyState.Hurt;
+        StartCoroutine(RecoverFromHurt());
+    }
+    protected virtual IEnumerator RecoverFromHurt()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _state = EnemyState.Chase;
     }
 }
 

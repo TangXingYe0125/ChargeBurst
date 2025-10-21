@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3479717065424017299}
   - component: {fileID: 7248438982179353967}
   m_Layer: 10
-  m_Name: WeakEnemy_Slime
+  m_Name: Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,9 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd5e8e0ccfd6c054abc314d21cd3cff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _force: 0
-  _damageTime: 0
-  _speed: 2
+  _force: 15
+  _damageTime: 1
+  _speed: 1.5
   _hp: 1
   _atk: 1
   _zone: {fileID: 0}
@@ -460,7 +460,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

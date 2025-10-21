@@ -391,6 +391,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 8192172673790052973, guid: 0f2c7fb568afbf34abfe53ccf2f77e65, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1584,6 +1588,7 @@ MonoBehaviour:
   _enemyPrefab:
   - {fileID: 170541882079607233, guid: 377d241bcbab24844a1b7b49d94ebbdd, type: 3}
   - {fileID: 8707597885531412239, guid: 53df6f1942e76c042b59a2b8d837c4b6, type: 3}
+  - {fileID: 2651708774453861257, guid: a1f8bc0958f71bb40a7ef73bff07e768, type: 3}
   _spawnPoints:
   - {fileID: 7914677476462978215}
   - {fileID: 5329059390099291794}
@@ -14860,6 +14865,10 @@ PrefabInstance:
     - target: {fileID: 2055527066253332488, guid: 442c46dac38157249a2a5fe17daff009, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3831534476026189059, guid: 442c46dac38157249a2a5fe17daff009, type: 3}
+      propertyPath: _time
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 3831534476026189059, guid: 442c46dac38157249a2a5fe17daff009, type: 3}
       propertyPath: _sceneController
