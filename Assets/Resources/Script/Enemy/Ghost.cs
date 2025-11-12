@@ -8,17 +8,12 @@ public class Ghost : EnemyController
     private float _skillCoolDown = 4.0f;
     private bool _isUsingSkill = false;
     private bool _isOnCooldown = false;
-    private int _originalLayer;
-    private string _invincibleLayerName = "GhostInvincible";
 
-    protected override void Start()
-    {
-        base.Start();
-        gameObject.layer = _originalLayer;
-    }
+    private float _lastHurtTime = -999f;
+    private float _hurtDelay = 4.0f;
     void Update()
     {
-        if (!_isUsingSkill && !_isOnCooldown && (_state != EnemyState.Hurt))
+        if (!_isUsingSkill && !_isOnCooldown && _state != EnemyState.Hurt && (Time.time - _lastHurtTime >= _hurtDelay))
         {
             StartCoroutine(UseSkill());
         }
@@ -41,5 +36,11 @@ public class Ghost : EnemyController
     {
         gameObject.layer = _originalLayer;
         _isUsingSkill = false;
+    }
+
+    protected override void EnterHurtState()
+    {
+        base.EnterHurtState();
+        _lastHurtTime = Time.time;
     }
 }

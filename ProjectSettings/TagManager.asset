@@ -10,6 +10,7 @@ TagManager:
   - Map
   - Zone
   - PlayerBody
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Player
   - Enemy
   - Sword
-  - GhostInvincible
+  - EnemyInvincible
   - 
   - 
   - 

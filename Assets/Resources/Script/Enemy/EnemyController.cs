@@ -24,18 +24,20 @@ public class EnemyController : MonoBehaviour
     protected float _waitTime = 1.0f;
     protected float _waitT = 0.0f;
 
-    private float _damageCooldown = 0.1f;
+    private float _damageCooldown = 0.2f;
     private float _lastHitTime;
 
     [SerializeField] protected Animator _animator;
     public bool _isKnockedBack;
+
+    protected int _originalLayer;
+    protected string _invincibleLayerName = "EnemyInvincible";
     private void Awake()
     {
         if(_zone == null)
         {
             _zone = GameObject.FindGameObjectWithTag("Zone").GetComponent<Zone>();
         }
-        Physics2D.IgnoreLayerCollision(10, 10, true);
     }
     protected virtual void Start()
     {
@@ -46,11 +48,11 @@ public class EnemyController : MonoBehaviour
         _isFeedingBack = false;
         _isKnockedBack = false;
         _lastHitTime = -1f;
+        _originalLayer = gameObject.layer;
     }
 
     private void FixedUpdate()
     {
-        Debug.Log(_state);
         if (GameStateManager.instance.CurrentState != GameState.Playing)
         {
             _rb.velocity = Vector2.zero;
@@ -73,22 +75,17 @@ public class EnemyController : MonoBehaviour
         if (collision.CompareTag("Burst"))
         {
             _hp -= 3;
-            _animator.SetTrigger("Hit");
-            _lastHitTime = Time.time;
             EnterHurtState();
         }
         else if (collision.CompareTag("Sword"))
         {
             _hp -= 1;
-            _animator.SetTrigger("Hit");
-            StartCoroutine(FeedBack());
-            _lastHitTime = Time.time;
             EnterHurtState();
         }
     }
     protected virtual void Track()
     {
-        if (_isKnockedBack) return;
+        if (_isKnockedBack || _state == EnemyState.Hurt) return;
 
         if (_hp <= 0)
         {
@@ -180,13 +177,19 @@ public class EnemyController : MonoBehaviour
     protected virtual void EnterHurtState()
     {
         if (_state == EnemyState.Hurt) return;
-
         _state = EnemyState.Hurt;
+
+        gameObject.layer = LayerMask.NameToLayer(_invincibleLayerName);
+        _animator.SetTrigger("Hit");
+        StartCoroutine(FeedBack());
+        _lastHitTime = Time.time;
+
         StartCoroutine(RecoverFromHurt());
     }
     protected virtual IEnumerator RecoverFromHurt()
     {
         yield return new WaitForSeconds(0.5f);
+        gameObject.layer = _originalLayer;
         _state = EnemyState.Chase;
     }
 }

@@ -107,7 +107,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 50
-  m_Sprite: {fileID: 3474578761864754926, guid: 6991e54fe8bb5724bafb4aba16583d49, type: 3}
+  m_Sprite: {fileID: 3863635566180601805, guid: bb22e9cd7a3f50c41aa55c47dd8c2975, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -379,9 +379,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _force: 15
   _damageTime: 1
-  _speed: 3
-  _hp: 3
+  _speed: 1.5
+  _hp: 4
   _atk: 1
   _zone: {fileID: 0}
   _animator: {fileID: 1691050946644246311}
   _isKnockedBack: 0
+  _angryPigOverrideController: {fileID: 22100000, guid: 95d8b0e1ef0913d4d9b25c8c23ba0006, type: 2}

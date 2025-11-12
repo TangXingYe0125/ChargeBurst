@@ -77,6 +77,6 @@ public class SceneController : MonoBehaviour
     {
         if (EventTrigger._isEventTriggerReady) return;
         Kills.instance.ResetKills();
-        await LoadScene(3);
+        await LoadScene(6);
     }
 }
