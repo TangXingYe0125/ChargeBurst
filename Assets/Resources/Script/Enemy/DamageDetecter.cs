@@ -30,6 +30,25 @@ public class DamageDetecter : MonoBehaviour
             }
             Destroy(collision.gameObject);
         }
+        else if (collision.CompareTag("Bullet") && PlayerHP.instance._isReady)
+        {
+            PlayerHP.instance._isReady = false;
+            PlayerHP.instance._isBullet = true;
+            Bullet bullet = collision.GetComponent<Bullet>();
+            PlayerHP.instance._damage = bullet._atk;
+            if (PlayerHP.instance._HP > bullet._atk)
+            {
+                KnockbackEnemies();
+            }
+            Destroy(collision.gameObject);
+        }
+        else if (collision.CompareTag("Boss") && PlayerHP.instance._isReady)
+        {
+            PlayerHP.instance._isReady = false;
+            PlayerHP.instance._isBoss = true;
+            EnemyController enemyController = collision.GetComponent<EnemyController>();
+            PlayerHP.instance._damage = enemyController._atk;
+        }
     }
     private void KnockbackEnemies()
     {

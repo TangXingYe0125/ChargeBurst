@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private float _force;
+    [SerializeField] protected float _force;
     [SerializeField] private float _damageTime;
     private bool _isFeedingBack;
     protected enum EnemyState { Idle, Chase, Wait, Return, Hurt }
@@ -24,8 +24,8 @@ public class EnemyController : MonoBehaviour
     protected float _waitTime = 1.0f;
     protected float _waitT = 0.0f;
 
-    private float _damageCooldown = 0.2f;
-    private float _lastHitTime;
+    protected float _damageCooldown = 0.2f;
+    protected float _lastHitTime;
 
     [SerializeField] protected Animator _animator;
     public bool _isKnockedBack;

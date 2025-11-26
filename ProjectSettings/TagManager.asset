@@ -11,6 +11,7 @@ TagManager:
   - Zone
   - PlayerBody
   - Boss
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Enemy
   - Sword
   - EnemyInvincible
-  - 
+  - Boss
   - 
   - 
   - 

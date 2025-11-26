@@ -12,6 +12,12 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float _rotationSpeed = 1080f;
 
+
+    public bool _isKnocked = false;
+    private float _knockDuration = 0.5f; 
+    public float _knockTimer = 0f;
+
+
     void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
@@ -24,6 +30,14 @@ public class PlayerMovement : MonoBehaviour
         if (GameStateManager.instance.CurrentState != GameState.Playing)
         {
             _rb.velocity = Vector2.zero;
+            return;
+        }
+        if (_isKnocked)
+        {
+            _knockTimer -= Time.fixedDeltaTime;
+            if (_knockTimer <= 0)
+                _isKnocked = false;
+
             return;
         }
         _rb.velocity = input * _speed;

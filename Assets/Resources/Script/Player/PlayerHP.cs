@@ -19,6 +19,8 @@ public class PlayerHP : MonoBehaviour
     private Animator _heartFade;
     [HideInInspector] public bool _isReady = true;
     [HideInInspector] public bool _isEnemy = false;
+    [HideInInspector] public bool _isBullet = false;
+    [HideInInspector] public bool _isBoss = false;
     [HideInInspector] public int _damage;
 
     private void Awake()
@@ -54,10 +56,24 @@ public class PlayerHP : MonoBehaviour
         if (_isEnemy)
         {
             _hit.PlayOneShot(_hit.clip);
-            HandleEnemyHit();
+            HandleHit();
             StartCoroutine(invincibility());
             Kills.instance._explodes++;
             _isEnemy = false;
+        }
+        else if (_isBullet)
+        {
+            _hit.PlayOneShot(_hit.clip);
+            HandleHit();
+            StartCoroutine(invincibility());
+            _isBullet = false;
+        }
+        else if (_isBoss)
+        {
+            _hit.PlayOneShot(_hit.clip);
+            HandleHit();
+            StartCoroutine(invincibility());
+            _isBoss = false;
         }
     }
     private async Task GetDamageAsync()
@@ -76,18 +92,18 @@ public class PlayerHP : MonoBehaviour
             GameStateManager.instance.SetState(GameState.GameOver);
             return;
         }        
-        await Task.Delay(700);
+        await Task.Delay(1500);
         _damage = 0;
         _isReady = true;
     }
     private IEnumerator invincibility()
     {
         Physics2D.IgnoreLayerCollision(9, 10, true);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.5f);
         Physics2D.IgnoreLayerCollision(9, 10, false);
     }
 
-    private async void HandleEnemyHit()
+    private async void HandleHit()
     {
         await GetDamageAsync();
     }

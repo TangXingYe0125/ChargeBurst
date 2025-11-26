@@ -20457,6 +20457,8 @@ MonoBehaviour:
   _feedBack: {fileID: 3007219905974816551}
   _isReady: 1
   _isEnemy: 0
+  _isBullet: 0
+  _isBoss: 0
   _damage: 0
 --- !u!82 &3458202609189181713
 AudioSource:
@@ -20570,6 +20572,8 @@ MonoBehaviour:
   _speed: 5
   _isAttacking: 0
   _rotationSpeed: 1080
+  _isKnocked: 0
+  _knockTimer: 0
 --- !u!1001 &4052181502935375757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20621,6 +20625,18 @@ PrefabInstance:
     - target: {fileID: 1443351057398507204, guid: 054929c810fd2844887be936d945e424, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5423746878130039288, guid: 054929c810fd2844887be936d945e424, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5423746878130039288, guid: 054929c810fd2844887be936d945e424, type: 3}
+      propertyPath: lengthInSec
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5423746878130039288, guid: 054929c810fd2844887be936d945e424, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
