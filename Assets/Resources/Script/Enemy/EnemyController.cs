@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
     protected float _waitTime = 1.0f;
     protected float _waitT = 0.0f;
 
-    protected float _damageCooldown = 0.2f;
+    protected float _damageCooldown = 0.5f;
     protected float _lastHitTime;
 
     [SerializeField] protected Animator _animator;
@@ -78,6 +78,11 @@ public class EnemyController : MonoBehaviour
             EnterHurtState();
         }
         else if (collision.CompareTag("Sword"))
+        {
+            _hp -= 1;
+            EnterHurtState();
+        }
+        else if (collision.CompareTag("Blade"))
         {
             _hp -= 1;
             EnterHurtState();

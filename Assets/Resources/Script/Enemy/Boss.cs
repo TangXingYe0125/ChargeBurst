@@ -8,14 +8,28 @@ public class Boss : EnemyController
     private CircleCollider2D _circleCollider;
     private CapsuleCollider2D _capsuleCollider;
     private BulletShooter bulletShooter;
+    private bool _isHurt;
+    private float _originalDamageCooldown;
+    [SerializeField] private BladeArray bladeArray;
+
     protected override void Start()
     {
         base.Start();
+        _originalDamageCooldown = _damageCooldown;
         _circleCollider = GetComponent<CircleCollider2D>();
         _capsuleCollider = GetComponent<CapsuleCollider2D>();
         _circleCollider.enabled = true;
         _capsuleCollider.enabled = false;
         bulletShooter = GetComponent<BulletShooter>();
+
+        bladeArray.OnStartBossAttack += () =>
+        {
+            _damageCooldown = 0f;   
+        };
+        bladeArray.OnEndBossAttack += () =>
+        {
+            _damageCooldown = _originalDamageCooldown; 
+        };
     }
     protected override void Track()
     {
@@ -45,6 +59,8 @@ public class Boss : EnemyController
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        if (Time.time - _lastHitTime < _damageCooldown) return;
+
         int _damage = 0;
         if (collision.CompareTag("Burst"))
         {
@@ -54,15 +70,18 @@ public class Boss : EnemyController
         {
             _damage = 1;
         }
+        else if (collision.CompareTag("Blade"))
+        {
+            _damage = 1;
+        }
         if (_damage > 0)
         {
             int oldHP = _hp; 
             _hp -= _damage;
             _bossHPBar.TakeDamage(_damage);
-
+            StartCoroutine(BossHurt());
             CheckPhaseChange(oldHP, _hp);
         }
-
 
         if (!collision.CompareTag("PlayerBody")) return;
         if (Time.time - _lastHitTime < _damageCooldown) return;
@@ -77,6 +96,19 @@ public class Boss : EnemyController
 
         StartCoroutine(KnockbackPlayer(playerRb, pm, dir));
 
+    }
+    private IEnumerator BossHurt()
+    {
+        if (_isHurt)
+        {
+            yield break;
+        }
+        _isHurt = true;
+        gameObject.layer = LayerMask.NameToLayer(_invincibleLayerName);
+        _lastHitTime = Time.time;
+        yield return new WaitForSeconds(0.5f);
+        gameObject.layer = _originalLayer;
+        _isHurt =false;
     }
     private IEnumerator KnockbackPlayer(Rigidbody2D playerRb, PlayerMovement pm, Vector2 dir)
     {

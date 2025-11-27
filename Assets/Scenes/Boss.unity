@@ -133,6 +133,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &102956957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 102956959}
+  - component: {fileID: 102956958}
+  m_Layer: 0
+  m_Name: BladeArray
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &102956958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102956957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758875abfa9eeb648a25637f6660a4ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _swordPrefab: {fileID: 8475929427505174967, guid: 7fdda44c78ccdef4f9f7fee9e949bd14, type: 3}
+  player: {fileID: 1073164419}
+  layers: 4
+  swordCountPerLayer: 12
+  baseRadius: 2
+  radiusStep: 1
+  rotationSpeed: 90
+  fadeInDuration: 0.3
+  layerDelay: 0.5
+  _lastBOSSBody: {fileID: 6943718184979492418}
+  attackDuration: 0.5
+  stopDuration: 0
+  backDistance: 0.5
+  backDuration: 0.2
+  isAttackingBoss: 0
+  _swordCount: 24
+  _angle: 15
+  _radius: 4
+  _delayTime: 0.1
+  _waitTime: 3
+--- !u!4 &102956959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102956957}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.058699, y: -2.928604, z: -0.596372}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &287481436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -997,56 +1061,6 @@ MonoBehaviour:
   _enemyAmount: 12
   _totalAmount: 0
   _enemyLeft: 0
---- !u!1 &572275787
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 572275789}
-  - component: {fileID: 572275788}
-  m_Layer: 0
-  m_Name: ControlBlade
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &572275788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 572275787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d109a060f7b97b4e80f192ba309a309, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _swordCount: 36
-  _angle: 10
-  _radius: 5
-  _delayTime: 0.1
-  _swordPrefab: {fileID: 8475929427505174967, guid: 7fdda44c78ccdef4f9f7fee9e949bd14, type: 3}
-  _lastBOSS: {fileID: 410158838966806716}
---- !u!4 &572275789
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 572275787}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &877704706
 GameObject:
   m_ObjectHideFlags: 0
@@ -15488,12 +15502,13 @@ MonoBehaviour:
   _force: 0.03
   _damageTime: 0
   _speed: 0
-  _hp: 60
+  _hp: 100
   _atk: 1
   _zone: {fileID: 1998404309}
   _animator: {fileID: 7572074874139840220}
   _isKnockedBack: 0
   _bossHPBar: {fileID: 528207689}
+  bladeArray: {fileID: 102956958}
 --- !u!114 &4731345270743056311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15517,7 +15532,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410158838966806716}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -16023,7 +16038,7 @@ SceneRoots:
   - {fileID: 5834730435148791105}
   - {fileID: 287481436}
   - {fileID: 2012092636}
-  - {fileID: 572275789}
   - {fileID: 404531875}
   - {fileID: 1998404311}
   - {fileID: 2145065417}
+  - {fileID: 102956959}

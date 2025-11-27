@@ -12,6 +12,7 @@ TagManager:
   - PlayerBody
   - Boss
   - Bullet
+  - Blade
   layers:
   - Default
   - TransparentFX
