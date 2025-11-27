@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Cysharp.Threading.Tasks;
 
 public class BladeArray : MonoBehaviour
 {
     [Header("Blade Settings")]
-    [SerializeField] private GameObject _swordPrefab;
+    [SerializeField] private GameObject _bladeArray;
     [SerializeField] private Transform player;
     [SerializeField] private int layers = 3;               // 层数
     [SerializeField] private int swordCountPerLayer = 12;  // 每圈剑数
@@ -28,6 +29,7 @@ public class BladeArray : MonoBehaviour
     public bool isAttackingBoss = false;
 
     [Header("ControlBlade")]
+    [SerializeField] private GameObject _controlBlade;
     [SerializeField] private int _swordCount;
     [SerializeField] private float _angle;
     [SerializeField] private float _radius;
@@ -37,7 +39,7 @@ public class BladeArray : MonoBehaviour
     public System.Action OnStartBossAttack;
     public System.Action OnEndBossAttack;
 
-    void Update()
+    private async void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -45,14 +47,13 @@ public class BladeArray : MonoBehaviour
             StartCoroutine(FollowPlayerCircle());
         }
 
+        Debug.Log(isAttackingBoss);
         if (Input.GetKeyDown(KeyCode.LeftControl) && !isAttackingBoss)
         {
-            StartCoroutine(BladesAttackBoss());
+            await BladesAttackBossAsync();
         }
 
-        Debug.Log(isAttackingBoss);
     }
-
     // ----------------- 生成多层剑阵 -----------------
     private IEnumerator SpawnMultiLayerBlades()
     {
@@ -71,7 +72,7 @@ public class BladeArray : MonoBehaviour
                 angles[i] = angleStep * i;
                 Vector2 targetPos = (Vector2)player.position + AngleToVector(angles[i]) * radius;
 
-                GameObject sword = Instantiate(_swordPrefab, targetPos, Quaternion.identity);
+                GameObject sword = Instantiate(_bladeArray, targetPos, Quaternion.identity);
 
                 // 渐入透明度
                 SpriteRenderer sr = sword.GetComponent<SpriteRenderer>();
@@ -138,17 +139,23 @@ public class BladeArray : MonoBehaviour
     }
 
     // ----------------- 剑阵攻击BOSS -----------------
-    private IEnumerator BladesAttackBoss()
+    public async UniTask BladesAttackBossAsync()
     {
+        // 触发开始事件
         OnStartBossAttack?.Invoke();
 
-        ControlBlades(_lastBOSSBody.position);
-        yield return new WaitForSeconds(_waitTime);
+        // 先控制剑阵生成和移动完成
+        await ControlBladesAsync(_lastBOSSBody.position);
+
+        // 设置攻击状态
         isAttackingBoss = true;
 
-        // 停止环绕
-        yield return new WaitForEndOfFrame();
+        // 停止环绕，保证一帧刷新位置
+        await UniTask.Yield();
 
+        List<UniTask> attackTasks = new List<UniTask>();
+
+        // 遍历每层剑
         for (int layer = 0; layer < allSwords.Count; layer++)
         {
             List<Transform> layerSwords = allSwords[layer];
@@ -156,7 +163,6 @@ public class BladeArray : MonoBehaviour
             {
                 Transform sword = layerSwords[i];
                 Vector2 dirToBOSS = (_lastBOSSBody.position - sword.position).normalized;
-
                 Vector2 startPos = sword.position;
                 Vector2 backPos = startPos - dirToBOSS * backDistance;
 
@@ -165,51 +171,76 @@ public class BladeArray : MonoBehaviour
 
                 // DOTween 顺序动画
                 Sequence seq = DOTween.Sequence();
-                seq.AppendInterval(stopDuration); // 停留1秒
-                seq.Append(sword.DOMove(backPos, backDuration).SetEase(Ease.OutCubic)); // 后退动作
+                seq.AppendInterval(stopDuration); // 停留
+                seq.Append(sword.DOMove(backPos, backDuration).SetEase(Ease.OutCubic)); // 后退
                 seq.Append(sword.DOMove(_lastBOSSBody.position, attackDuration).SetEase(Ease.InCubic));
                 seq.OnComplete(() => Destroy(sword.gameObject));
                 seq.Play();
+
+                // 将 DOTween 动画包装为 UniTask，加入任务列表
+                attackTasks.Add(UniTask.Create(async () => await seq.AsyncWaitForCompletion()));
             }
         }
 
+        // 等待所有剑的攻击动画完成
+        await UniTask.WhenAll(attackTasks);
+
+        // 清空数据
         allSwords.Clear();
         allAngles.Clear();
+
+        // 重置攻击状态
         isAttackingBoss = false;
 
+        // 触发结束事件
         OnEndBossAttack?.Invoke();
-        yield return null;
     }
 
-    public void ControlBlades(Vector2 attackPos)
+    public async UniTask ControlBladesAsync(Vector3 attackPos)
     {
-        List<Vector2> spawnPosList = new List<Vector2>();
+        List<Vector3> spawnPosList = new List<Vector3>();
+
         for (int i = 0; i < _swordCount; i++)
         {
-            var dir = i % 2 == 0 ? -1 : 1;
-            var p = Quaternion.Euler(0, 0, _angle * ((i + 1) / 2) * dir) * new Vector2(0, _radius);
-            spawnPosList.Add(p);
+            int dirMultiplier = i % 2 == 0 ? -1 : 1;
+            Vector2 offset = Quaternion.Euler(0, 0, _angle * ((i + 1) / 2) * dirMultiplier) * new Vector2(0, _radius);
+            spawnPosList.Add(offset);
         }
 
-        var startPos = attackPos + new Vector2(0, _radius);
+        Vector3 startPos = attackPos + new Vector3(0, _radius, 0);
+
+        // 所有剑的任务列表
+        List<UniTask> swordTasks = new List<UniTask>();
+
         for (int i = 0; i < spawnPosList.Count; i++)
         {
-            var sword = Instantiate(_swordPrefab, startPos, Quaternion.identity);
-            sword.transform.up = Vector2.down;
+            Transform sword = Instantiate(_controlBlade, startPos, Quaternion.identity).transform;
+            sword.up = Vector2.down;
 
-            var mSequence = DOTween.Sequence();
-            var pos = attackPos + spawnPosList[i];
-            var dir = (attackPos - pos).normalized;
+            Vector3 targetPos = attackPos + spawnPosList[i];
+            Vector3 dir = (attackPos - targetPos).normalized;
 
-            mSequence.AppendInterval((i + 1) / 2 * _delayTime);
-            mSequence.Append(DOTween.To(() => sword.transform.up, x => sword.transform.up = x, (Vector3)dir, 0.3f));
-            mSequence.Join(sword.transform.DOMove(pos, 0.3f));
-            mSequence.AppendInterval(1.0f);
-            mSequence.Append(sword.transform.DOMove(-dir + pos, 0.4f));
-            mSequence.Append(sword.transform.DOMove(attackPos, 0.5f));
-            mSequence.Play();
+            Sequence seq = DOTween.Sequence();
+            seq.AppendInterval((i + 1) / 2f * _delayTime);                  // 延迟
+            seq.Append(DOTween.To(() => sword.up, x => sword.up = x, dir, 0.3f)); // 剑尖旋转
+            seq.Join(sword.DOMove(targetPos, 0.3f));                         // 移动到偏移位置
+            seq.AppendInterval(1.0f);                                        // 停留
+            seq.Append(sword.DOMove(targetPos - dir, 0.4f));                 // 后退
+            seq.Append(sword.DOMove(attackPos, 0.5f));                        // 飞向目标
+            seq.OnComplete(() => Destroy(sword.gameObject));
+            seq.Play();
+
+            // 每把剑动画包装为 UniTask，加入列表
+            swordTasks.Add(UniTask.Create(async () => await seq.AsyncWaitForCompletion()));
         }
+
+        // 等待所有剑动画完成
+        await UniTask.WhenAll(swordTasks);
+        Debug.Log("万剑准备就绪");
     }
+
+
+
 
     // ----------------- 工具方法 -----------------
     private Vector2 AngleToVector(float angle)

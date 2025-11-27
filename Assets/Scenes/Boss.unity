@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 758875abfa9eeb648a25637f6660a4ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _swordPrefab: {fileID: 8475929427505174967, guid: 7fdda44c78ccdef4f9f7fee9e949bd14, type: 3}
+  _bladeArray: {fileID: 8475929427505174967, guid: 0d2e6bdfb92157c4fb7cb7b1ed5ff89a, type: 3}
   player: {fileID: 1073164419}
   layers: 4
   swordCountPerLayer: 12
@@ -177,6 +177,7 @@ MonoBehaviour:
   backDistance: 0.5
   backDuration: 0.2
   isAttackingBoss: 0
+  _controlBlade: {fileID: 8475929427505174967, guid: 7fdda44c78ccdef4f9f7fee9e949bd14, type: 3}
   _swordCount: 24
   _angle: 15
   _radius: 4

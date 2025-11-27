@@ -1007,7 +1007,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2985413837274909300}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
-        m_MethodName: TestStage
+        m_MethodName: NextStage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

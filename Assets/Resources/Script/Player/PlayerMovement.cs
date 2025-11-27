@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     public bool _isKnocked = false;
-    private float _knockDuration = 0.5f; 
+    //private float _knockDuration = 0.5f; 
     public float _knockTimer = 0f;
 
 

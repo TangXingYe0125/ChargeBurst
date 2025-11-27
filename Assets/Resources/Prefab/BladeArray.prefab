@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5941598626665463400}
   - component: {fileID: 7341403705187561132}
   - component: {fileID: 148731743848459583}
+  - component: {fileID: 3741458291508980654}
   m_Layer: 0
-  m_Name: ControlBlade
-  m_TagString: Untagged
+  m_Name: BladeArray
+  m_TagString: Blade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,3 +131,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.21, y: 0.66}
   m_EdgeRadius: 0
+--- !u!114 &3741458291508980654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8475929427505174967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f48dedd68155b8448e697765fee2c99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

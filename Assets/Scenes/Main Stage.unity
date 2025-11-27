@@ -28756,7 +28756,7 @@ PrefabInstance:
     - target: {fileID: 7989241773994451577, guid: 48142c731ba4e624eb53ae5a4c2fe117, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a55f08a987b58c048ae1992bcab4f7bb, type: 2}
+      objectReference: {fileID: 2100000, guid: d8a60e9fc3108f74e8c0b76436d9910e, type: 2}
     - target: {fileID: 8872462251303357251, guid: 48142c731ba4e624eb53ae5a4c2fe117, type: 3}
       propertyPath: m_Name
       value: PlayerCharacter
