@@ -177,6 +177,7 @@ MonoBehaviour:
   backDistance: 0.5
   backDuration: 0.2
   isAttackingBoss: 0
+  _boss: {fileID: 410158838966806716}
   _controlBlade: {fileID: 8475929427505174967, guid: 7fdda44c78ccdef4f9f7fee9e949bd14, type: 3}
   _swordCount: 24
   _angle: 15
@@ -1073,6 +1074,7 @@ GameObject:
   - component: {fileID: 877704709}
   - component: {fileID: 877704708}
   - component: {fileID: 877704710}
+  - component: {fileID: 877704711}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -1152,6 +1154,20 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 1140139682}
   m_ConfineScreenEdges: 1
   m_Damping: 0
+--- !u!114 &877704711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877704706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ce931056d1bd840a2cbcae2a67c195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultAmplitude: 8
+  defaultTime: 3
 --- !u!114 &1015155858 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4697895990647351549, guid: 51a1004a7c92bc142b8e6d6b5418d29b, type: 3}
@@ -1336,6 +1352,7 @@ GameObject:
   - component: {fileID: 1302094680}
   - component: {fileID: 1302094683}
   - component: {fileID: 1302094681}
+  - component: {fileID: 1302094684}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -1392,6 +1409,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1302094684
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302094679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 1, y: 1, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 1.5
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!114 &1321866587 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4680053424607585794, guid: 442c46dac38157249a2a5fe17daff009, type: 3}

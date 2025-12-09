@@ -31,6 +31,13 @@ public class Boss : EnemyController
             _damageCooldown = _originalDamageCooldown; 
         };
     }
+    private void Update()
+    {
+        //if (_hp <= 0)
+        //{
+        //    GameStateManager.instance.SetState(GameState.Victory);
+        //}
+    }
     protected override void Track()
     {
 

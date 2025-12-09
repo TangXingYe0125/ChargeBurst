@@ -29,6 +29,7 @@ public class BladeArray : MonoBehaviour
     public bool isAttackingBoss = false;
 
     [Header("ControlBlade")]
+    [SerializeField] private GameObject _boss;
     [SerializeField] private GameObject _controlBlade;
     [SerializeField] private int _swordCount;
     [SerializeField] private float _angle;
@@ -174,6 +175,10 @@ public class BladeArray : MonoBehaviour
                 seq.AppendInterval(stopDuration); // 停留
                 seq.Append(sword.DOMove(backPos, backDuration).SetEase(Ease.OutCubic)); // 后退
                 seq.Append(sword.DOMove(_lastBOSSBody.position, attackDuration).SetEase(Ease.InCubic));
+                seq.AppendCallback(() =>
+                {
+                    CameraShake.Shake(2.0f,0.5f);
+                });
                 seq.OnComplete(() => Destroy(sword.gameObject));
                 seq.Play();
 
@@ -217,16 +222,37 @@ public class BladeArray : MonoBehaviour
             Transform sword = Instantiate(_controlBlade, startPos, Quaternion.identity).transform;
             sword.up = Vector2.down;
 
+            Collider2D swordCol = sword.GetComponent<Collider2D>();
+            Collider2D[] bossCols = _boss.GetComponents<Collider2D>();
+
             Vector3 targetPos = attackPos + spawnPosList[i];
             Vector3 dir = (attackPos - targetPos).normalized;
+
+            foreach (var col in bossCols)
+            {
+                Physics2D.IgnoreCollision(swordCol, col, true);
+            }
 
             Sequence seq = DOTween.Sequence();
             seq.AppendInterval((i + 1) / 2f * _delayTime);                  // 延迟
             seq.Append(DOTween.To(() => sword.up, x => sword.up = x, dir, 0.3f)); // 剑尖旋转
             seq.Join(sword.DOMove(targetPos, 0.3f));                         // 移动到偏移位置
             seq.AppendInterval(1.0f);                                        // 停留
+
+            seq.AppendCallback(() =>
+            {
+                foreach (var col in bossCols)
+                {
+                    Physics2D.IgnoreCollision(swordCol, col, false);
+                }
+            });
+
             seq.Append(sword.DOMove(targetPos - dir, 0.4f));                 // 后退
             seq.Append(sword.DOMove(attackPos, 0.5f));                        // 飞向目标
+            seq.AppendCallback(() =>
+            {
+                CameraShake.Shake(2.0f,0.2f);
+            });
             seq.OnComplete(() => Destroy(sword.gameObject));
             seq.Play();
 
@@ -236,7 +262,7 @@ public class BladeArray : MonoBehaviour
 
         // 等待所有剑动画完成
         await UniTask.WhenAll(swordTasks);
-        Debug.Log("万剑准备就绪");
+
     }
 
 
