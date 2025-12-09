@@ -1166,8 +1166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ce931056d1bd840a2cbcae2a67c195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultAmplitude: 8
-  defaultTime: 3
 --- !u!114 &1015155858 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4697895990647351549, guid: 51a1004a7c92bc142b8e6d6b5418d29b, type: 3}
