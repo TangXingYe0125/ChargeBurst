@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
 
     protected Transform _playerPos;
     [SerializeField] protected float _speed;
-    [SerializeField] protected int _hp;
+    public int _hp;
     public int _atk;
     protected Rigidbody2D _rb;
 

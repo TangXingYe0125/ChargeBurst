@@ -177,6 +177,7 @@ MonoBehaviour:
   backDistance: 0.5
   backDuration: 0.2
   isAttackingBoss: 0
+  boss: {fileID: 4731345270743056310}
   _boss: {fileID: 410158838966806716}
   _controlBlade: {fileID: 8475929427505174967, guid: 7fdda44c78ccdef4f9f7fee9e949bd14, type: 3}
   _swordCount: 24
@@ -184,6 +185,7 @@ MonoBehaviour:
   _radius: 4
   _delayTime: 0.1
   _waitTime: 3
+  triggerHpValue: 50
 --- !u!4 &102956959
 Transform:
   m_ObjectHideFlags: 0

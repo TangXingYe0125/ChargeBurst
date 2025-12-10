@@ -27,6 +27,7 @@ public class BladeArray : MonoBehaviour
     private List<List<Transform>> allSwords = new List<List<Transform>>();
     private List<float[]> allAngles = new List<float[]>();
     public bool isAttackingBoss = false;
+    [SerializeField] private Boss boss;
 
     [Header("ControlBlade")]
     [SerializeField] private GameObject _boss;
@@ -39,20 +40,34 @@ public class BladeArray : MonoBehaviour
 
     public System.Action OnStartBossAttack;
     public System.Action OnEndBossAttack;
+    [SerializeField] private int triggerHpValue = 40;
+    private bool _patternTriggered = false;
+
+    public float ctrlTriggerHp = 25f;
+    private bool ctrlAttackUnlocked = false;
+    private bool ctrlAttackUsed = false;
 
     private async void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!_patternTriggered && boss._hp <= triggerHpValue)
         {
+            _patternTriggered = true; 
             StartCoroutine(SpawnMultiLayerBlades());
             StartCoroutine(FollowPlayerCircle());
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !isAttackingBoss)
+        if (!ctrlAttackUnlocked && boss._hp <= ctrlTriggerHp)
         {
-            await BladesAttackBossAsync();
+            ctrlAttackUnlocked = true;
         }
-
+        if(ctrlAttackUnlocked && !ctrlAttackUsed && !isAttackingBoss)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                ctrlAttackUsed = true;
+                await BladesAttackBossAsync();
+            }
+        }
     }
     // ----------------- Éú³É¶à²ã½£Õó -----------------
     private IEnumerator SpawnMultiLayerBlades()

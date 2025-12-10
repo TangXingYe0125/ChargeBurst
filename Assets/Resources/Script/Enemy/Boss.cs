@@ -48,7 +48,7 @@ public class Boss : EnemyController
     }
     protected virtual void CheckPhaseChange(int oldHP, int newHP)
     {
-        if (oldHP > 30 && newHP <= 30)
+        if (oldHP > bladeArray.ctrlTriggerHp && newHP <= bladeArray.ctrlTriggerHp)
         {
             _circleCollider.enabled = false;
             _capsuleCollider.enabled = true;
