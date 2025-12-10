@@ -11,6 +11,8 @@ public class Boss : EnemyController
     private bool _isHurt;
     private float _originalDamageCooldown;
     [SerializeField] private BladeArray bladeArray;
+    private bool _isDead = false;
+    [SerializeField] private Animator _dieBodyAnimator;
 
     protected override void Start()
     {
@@ -31,12 +33,14 @@ public class Boss : EnemyController
             _damageCooldown = _originalDamageCooldown; 
         };
     }
+
     private void Update()
     {
-        //if (_hp <= 0)
-        //{
-        //    GameStateManager.instance.SetState(GameState.Victory);
-        //}
+        if (_hp <= 0 && !_isDead)
+        {
+            _isDead = true;
+            StartCoroutine(BossDeathSequence());
+        }
     }
     protected override void Track()
     {
@@ -137,5 +141,19 @@ public class Boss : EnemyController
         {
             pm._isKnocked = false;
         }
+    }
+
+    private IEnumerator BossDeathSequence()
+    {
+        _dieBodyAnimator.SetTrigger("Die");
+
+        yield return new WaitForSeconds(0.4f);
+        Destroy(_animator);
+        var sr = _animator.GetComponent<SpriteRenderer>();
+        sr.sprite = null;
+
+        yield return new WaitForSeconds(1.0f);
+
+        GameStateManager.instance.SetState(GameState.Clear);
     }
 }

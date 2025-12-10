@@ -48,7 +48,6 @@ public class BladeArray : MonoBehaviour
             StartCoroutine(FollowPlayerCircle());
         }
 
-        Debug.Log(isAttackingBoss);
         if (Input.GetKeyDown(KeyCode.LeftControl) && !isAttackingBoss)
         {
             await BladesAttackBossAsync();

@@ -10,7 +10,8 @@ public enum GameState
     Playing,
     Paused,
     GameOver,
-    Victory
+    Victory,
+    Clear
 }
 
 public class GameStateManager : MonoBehaviour
@@ -85,6 +86,9 @@ public class GameStateManager : MonoBehaviour
             case GameState.Victory:
                 await HandleVictory();
                 break;
+            case GameState.Clear:
+                await GameClear();
+                break;
         }
     }
 
@@ -133,7 +137,16 @@ public class GameStateManager : MonoBehaviour
         FreezePlayer();
         _playerAnimator.SetTrigger("isStageClear");
 
-        await Task.Delay(1000);// wait for 1.0f
+        await Task.Delay(1000);
+
+        await _sceneController.LoadScene(_sceneController._currentSceneNum + 1);
+    }
+    private async Task GameClear()
+    {
+        FreezePlayer();
+        _playerAnimator.SetTrigger("isStageClear");
+
+        await Task.Delay(1200);
 
         await _sceneController.LoadScene(_sceneController._currentSceneNum + 1);
     }
