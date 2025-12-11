@@ -8,6 +8,7 @@ public class Boss : EnemyController
     private CircleCollider2D _circleCollider;
     private CapsuleCollider2D _capsuleCollider;
     private BulletShooter bulletShooter;
+    private BossEnemyInstantiate bossEnemyInstantiate;
     private bool _isHurt;
     private float _originalDamageCooldown;
     [SerializeField] private BladeArray bladeArray;
@@ -23,6 +24,7 @@ public class Boss : EnemyController
         _circleCollider.enabled = true;
         _capsuleCollider.enabled = false;
         bulletShooter = GetComponent<BulletShooter>();
+        bossEnemyInstantiate = GetComponent<BossEnemyInstantiate>();
 
         bladeArray.OnStartBossAttack += () =>
         {
@@ -30,15 +32,15 @@ public class Boss : EnemyController
         };
         bladeArray.OnEndBossAttack += () =>
         {
-            _damageCooldown = _originalDamageCooldown; 
+            _damageCooldown = _originalDamageCooldown;
+            _isDead = true;
         };
     }
-
     private void Update()
     {
-        if (_hp <= 0 && !_isDead)
+        if (_hp <= 0 &&_isDead)
         {
-            _isDead = true;
+            _isDead = false;
             StartCoroutine(BossDeathSequence());
         }
     }
@@ -48,6 +50,11 @@ public class Boss : EnemyController
     }
     protected virtual void CheckPhaseChange(int oldHP, int newHP)
     {
+        if (oldHP > bossEnemyInstantiate._instantiateHP && newHP <= bossEnemyInstantiate._instantiateHP)
+        {
+            bossEnemyInstantiate.Instantiate();
+        }
+
         if (oldHP > bladeArray.ctrlTriggerHp && newHP <= bladeArray.ctrlTriggerHp)
         {
             _circleCollider.enabled = false;
@@ -56,7 +63,6 @@ public class Boss : EnemyController
             Destroy(bulletShooter);
         }
     }
-
     protected override void TurnDirection()
     {
         if (transform.position.x >= _playerPos.position.x)

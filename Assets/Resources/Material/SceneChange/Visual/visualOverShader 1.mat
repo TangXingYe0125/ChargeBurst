@@ -60,6 +60,6 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Slider: 0.36917686
+    - _Slider: 1
     m_Colors: []
   m_BuildTextureStacks: []

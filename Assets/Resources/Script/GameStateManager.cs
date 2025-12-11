@@ -11,7 +11,7 @@ public enum GameState
     Paused,
     GameOver,
     Victory,
-    Clear
+    Clear,
 }
 
 public class GameStateManager : MonoBehaviour
@@ -129,7 +129,8 @@ public class GameStateManager : MonoBehaviour
         await weaponTween.AsyncWaitForCompletion();
 
         GameProgress.LastLevelIndex = SceneManager.GetActiveScene().buildIndex;
-        await _sceneController.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
+        if(SceneManager.GetActiveScene().name == "Boss") await _sceneController.LoadScene(SceneManager.sceneCountInBuildSettings - 2);
+        else                                             await _sceneController.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
     }
     private async Task HandleVictory()
     {
@@ -146,7 +147,7 @@ public class GameStateManager : MonoBehaviour
         FreezePlayer();
         _playerAnimator.SetTrigger("isStageClear");
 
-        await Task.Delay(1200);
+        await Task.Delay(3000);
 
         await _sceneController.LoadScene(_sceneController._currentSceneNum + 1);
     }
