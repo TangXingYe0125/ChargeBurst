@@ -1664,6 +1664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fadeDuration: 1
   _waitTime: 2
+  _bossBody: {fileID: 426723129}
 --- !u!1 &877704706
 GameObject:
   m_ObjectHideFlags: 0

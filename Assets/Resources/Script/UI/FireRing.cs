@@ -27,7 +27,7 @@ public class FireRing : MonoBehaviour
     {
         yield return new WaitForSeconds(_waitTime);
         yield return StartCoroutine(Fade(0.0f,1.0f,_fadeDuration,_sr));
-        yield return StartCoroutine(Fade(0.0f,1.0f,2 * _fadeDuration,_bossBody));//not the best way
+        yield return StartCoroutine(Fade(0.0f,1.0f,_fadeDuration,_bossBody));//not the best way
         yield return new WaitForSeconds(_waitTime);
         yield return StartCoroutine(Fade(1.0f, 0.0f, _fadeDuration, _sr));
         Destroy(this.gameObject);
