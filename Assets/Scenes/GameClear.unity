@@ -263,7 +263,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'BOSS: <color=#FF0000>TERMINATED</color>'
+  m_text: 'BOSS : <color=#FF0000>TERMINATED</color>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 91216f732dc346349bf8b5ca10991efe, type: 2}
   m_sharedMaterial: {fileID: -6654873862354244649, guid: 91216f732dc346349bf8b5ca10991efe, type: 2}
@@ -1482,7 +1482,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Time Left :'
+  m_text: 'Time :'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 91216f732dc346349bf8b5ca10991efe, type: 2}
   m_sharedMaterial: {fileID: -6654873862354244649, guid: 91216f732dc346349bf8b5ca10991efe, type: 2}

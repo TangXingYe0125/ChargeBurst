@@ -11,18 +11,18 @@ public class BladeArray : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private int layers = 3;               // ²ãÊı
     [SerializeField] private int swordCountPerLayer = 12;  // Ã¿È¦½£Êı
-    [SerializeField] private float baseRadius = 2f;        // µÚÒ»È¦°ë¾¶
-    [SerializeField] private float radiusStep = 1f;        // Ã¿È¦°ë¾¶µİÔö
-    [SerializeField] private float rotationSpeed = 90f;    // ½Ç¶È/Ãë
-    [SerializeField] private float fadeInDuration = 0.3f;  // ½¥Èë¶¯»­Ê±¼ä
+    [SerializeField] private float baseRadius = 2f;        // µÚÒ»È¦°E¶
+    [SerializeField] private float radiusStep = 1f;        // Ã¿È¦°E¶µİÔE
+    [SerializeField] private float rotationSpeed = 90f;    // ½Ç¶È/ÃE
+    [SerializeField] private float fadeInDuration = 0.3f;  // ½¥ÈE¯»­Ê±¼E
     [SerializeField] private float layerDelay = 0.5f;      // Ã¿²ãÉú³ÉÑÓ³Ù
 
     [Header("Attack Settings")]
     [SerializeField] private Transform _lastBOSSBody;     // Canvas ÉÏ BOSS µÄ body Transform
-    [SerializeField] private float attackDuration = 2.0f; // ·ÉÏò BOSS Ê±¼ä
-    [SerializeField] private float stopDuration = 1.0f;   // Í£ÁôÊ±¼ä
-    [SerializeField] private float backDistance = 0.5f;   // ºóÍË¾àÀë
-    [SerializeField] private float backDuration = 0.2f;   // ºóÍË¶¯»­Ê±¼ä
+    [SerializeField] private float attackDuration = 2.0f; // ·ÉÏEBOSS Ê±¼E
+    [SerializeField] private float stopDuration = 1.0f;   // Í£ÁôÊ±¼E
+    [SerializeField] private float backDistance = 0.5f;   // ºóÍË¾àÀE
+    [SerializeField] private float backDuration = 0.2f;   // ºóÍË¶¯»­Ê±¼E
 
     private List<List<Transform>> allSwords = new List<List<Transform>>();
     private List<float[]> allAngles = new List<float[]>();
@@ -69,7 +69,7 @@ public class BladeArray : MonoBehaviour
             }
         }
     }
-    // ----------------- Éú³É¶à²ã½£Õó -----------------
+    // ----------------- Éú³É¶à²ã½£ÕE-----------------
     private IEnumerator SpawnMultiLayerBlades()
     {
         allSwords.Clear();
@@ -89,7 +89,7 @@ public class BladeArray : MonoBehaviour
 
                 GameObject sword = Instantiate(_bladeArray, targetPos, Quaternion.identity);
 
-                // ½¥ÈëÍ¸Ã÷¶È
+                // ½¥ÈE¸Ã÷¶È
                 SpriteRenderer sr = sword.GetComponent<SpriteRenderer>();
                 if (sr != null)
                 {
@@ -99,7 +99,7 @@ public class BladeArray : MonoBehaviour
                     StartCoroutine(FadeIn(sr, fadeInDuration));
                 }
 
-                // ½£¼â³¯Íâ
+                // ½£¼â³¯ÍE
                 sword.transform.up = (targetPos - (Vector2)player.position).normalized;
                 layerSwords.Add(sword.transform);
             }
@@ -135,7 +135,7 @@ public class BladeArray : MonoBehaviour
             {
                 List<Transform> layerSwords = allSwords[layer];
                 float[] angles = allAngles[layer];
-                float direction = (layer % 2 == 0) ? 1f : -1f; // »ùÊıË³Ê±Õë£¬Å¼ÊıÄæÊ±Õë
+                float direction = (layer % 2 == 0) ? 1f : -1f; // »ùÊıË³Ê±ÕE¬Å¼ÊıÄæÊ±ÕE
 
                 for (int i = 0; i < layerSwords.Count; i++)
                 {
@@ -143,7 +143,7 @@ public class BladeArray : MonoBehaviour
                     Vector2 targetPos = (Vector2)player.position + AngleToVector(angles[i]) * (baseRadius + layer * radiusStep);
                     layerSwords[i].position = targetPos;
 
-                    // ½£¼âÊ¼ÖÕ³¯Íâ
+                    // ½£¼âÊ¼ÖÕ³¯ÍE
                     layerSwords[i].up = (targetPos - (Vector2)player.position).normalized;
                 }
             }
@@ -157,7 +157,7 @@ public class BladeArray : MonoBehaviour
         // ´¥·¢¿ªÊ¼ÊÂ¼ş
         OnStartBossAttack?.Invoke();
 
-        // ÏÈ¿ØÖÆ½£ÕóÉú³ÉºÍÒÆ¶¯Íê³É
+        // ÏÈ¿ØÖÆ½£ÕóÉú³ÉºÍÒÆ¶¯ÍEÉ
         await ControlBladesAsync(_lastBOSSBody.position);
 
         // ÉèÖÃ¹¥»÷×´Ì¬
@@ -184,7 +184,7 @@ public class BladeArray : MonoBehaviour
 
                 // DOTween Ë³Ğò¶¯»­
                 Sequence seq = DOTween.Sequence();
-                seq.AppendInterval(stopDuration); // Í£Áô
+                seq.AppendInterval(stopDuration); // Í£ÁE
                 seq.Append(sword.DOMove(backPos, backDuration).SetEase(Ease.OutCubic)); // ºóÍË
                 seq.AppendCallback(() =>
                 {
@@ -198,12 +198,12 @@ public class BladeArray : MonoBehaviour
                 seq.OnComplete(() => Destroy(sword.gameObject));
                 seq.Play();
 
-                // ½« DOTween ¶¯»­°ü×°Îª UniTask£¬¼ÓÈëÈÎÎñÁĞ±í
+                // ½« DOTween ¶¯»­°E°Îª UniTask£¬¼ÓÈEÎÎñÁĞ±E
                 attackTasks.Add(UniTask.Create(async () => await seq.AsyncWaitForCompletion()));
             }
         }
 
-        // µÈ´ıËùÓĞ½£µÄ¹¥»÷¶¯»­Íê³É
+        // µÈ´ıËùÓĞ½£µÄ¹¥»÷¶¯»­ÍEÉ
         await UniTask.WhenAll(attackTasks);
 
         // Çå¿ÕÊı¾İ
@@ -230,7 +230,7 @@ public class BladeArray : MonoBehaviour
 
         Vector3 startPos = attackPos + new Vector3(0, _radius, 0);
 
-        // ËùÓĞ½£µÄÈÎÎñÁĞ±í
+        // ËùÓĞ½£µÄÈÎÎñÁĞ±E
         List<UniTask> swordTasks = new List<UniTask>();
 
         for (int i = 0; i < spawnPosList.Count; i++)
@@ -253,7 +253,7 @@ public class BladeArray : MonoBehaviour
             seq.AppendInterval((i + 1) / 2f * _delayTime);                  // ÑÓ³Ù
             seq.Append(DOTween.To(() => sword.up, x => sword.up = x, dir, 0.3f)); // ½£¼âĞı×ª
             seq.Join(sword.DOMove(targetPos, 0.3f));                         // ÒÆ¶¯µ½Æ«ÒÆÎ»ÖÃ
-            seq.AppendInterval(1.0f);                                        // Í£Áô
+            seq.AppendInterval(1.0f);                                        // Í£ÁE
 
             seq.AppendCallback(() =>
             {
@@ -264,7 +264,7 @@ public class BladeArray : MonoBehaviour
             });
 
             seq.Append(sword.DOMove(targetPos - dir, 0.4f));                 // ºóÍË
-            seq.Append(sword.DOMove(attackPos, 0.5f));                        // ·ÉÏòÄ¿±ê
+            seq.Append(sword.DOMove(attackPos, 0.5f));                        // ·ÉÏòÄ¿±E
             seq.AppendCallback(() =>
             {
                 CameraShake.Shake(2.0f,0.2f);
@@ -272,11 +272,11 @@ public class BladeArray : MonoBehaviour
             seq.OnComplete(() => Destroy(sword.gameObject));
             seq.Play();
 
-            // Ã¿°Ñ½£¶¯»­°ü×°Îª UniTask£¬¼ÓÈëÁĞ±í
+            // Ã¿°Ñ½£¶¯»­°E°Îª UniTask£¬¼ÓÈEĞ±E
             swordTasks.Add(UniTask.Create(async () => await seq.AsyncWaitForCompletion()));
         }
 
-        // µÈ´ıËùÓĞ½£¶¯»­Íê³É
+        // µÈ´ıËùÓĞ½£¶¯»­ÍEÉ
         await UniTask.WhenAll(swordTasks);
 
     }
