@@ -930,14 +930,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 481471114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a623fc9a049a76440a758cc914e16c51, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ed81c292405b3645a6dede53ac504c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: []
-  _spawnPoints: []
-  _enemyAmount: 99
-  _totalAmount: 0
-  _enemyLeft: 0
+  _enemyPrefab:
+  - {fileID: 170541882079607233, guid: 377d241bcbab24844a1b7b49d94ebbdd, type: 3}
+  - {fileID: 8707597885531412239, guid: 53df6f1942e76c042b59a2b8d837c4b6, type: 3}
+  - {fileID: 2651708774453861257, guid: a1f8bc0958f71bb40a7ef73bff07e768, type: 3}
+  _spawnPoints:
+  - {fileID: 567938771}
+  - {fileID: 1883903543}
+  - {fileID: 1398861348}
+  - {fileID: 1836907725}
+  - {fileID: 756050259}
+  - {fileID: 218318950}
+  _instantiateHP: 70
 --- !u!1 &500977660 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8192172673790052973, guid: 0f2c7fb568afbf34abfe53ccf2f77e65, type: 3}
@@ -1574,7 +1581,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &820931865
 Animator:
   serializedVersion: 5
@@ -16483,8 +16490,9 @@ MonoBehaviour:
   _zone: {fileID: 1998404309}
   _animator: {fileID: 426723128}
   _isKnockedBack: 0
-  _enemyHitClip: {fileID: 0}
+  _enemyHitClip: {fileID: 8300000, guid: db24b2a2304da70449868e4dcb6a0686, type: 3}
   _bossHPBar: {fileID: 528207689}
+  bossEnemyInstantiate: {fileID: 481471117}
   bladeArray: {fileID: 102956958}
   _dieBodyAnimator: {fileID: 159354765}
   hitSoundCooldown: 0.12

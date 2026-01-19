@@ -96,7 +96,7 @@ public class BulletShooter : MonoBehaviour
         int bulletCount = 14;
         float gapAngle = 50f;
 
-        _circleGapAngle += 25f; // 每一波旋转缺口
+        _circleGapAngle += 25f; 
         if (_circleGapAngle >= 360f)
             _circleGapAngle -= 360f;
 
@@ -115,7 +115,7 @@ public class BulletShooter : MonoBehaviour
     void ShootRotate()
     {
         int count = 12;
-        _rotateAngle += 10f; // 每次波次旋转多少度（可调）
+        _rotateAngle += 10f;
 
         for (int i = 0; i < count; i++)
         {

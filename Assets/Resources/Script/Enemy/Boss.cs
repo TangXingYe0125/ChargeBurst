@@ -8,7 +8,7 @@ public class Boss : EnemyController
     private CircleCollider2D _circleCollider;
     private CapsuleCollider2D _capsuleCollider;
     private BulletShooter bulletShooter;
-    private BossEnemyInstantiate bossEnemyInstantiate;
+    [SerializeField]private BossEnemyInstantiate bossEnemyInstantiate;
     private bool _isHurt;
     private float _originalDamageCooldown;
     [SerializeField] private BladeArray bladeArray;
@@ -27,7 +27,6 @@ public class Boss : EnemyController
         _circleCollider.enabled = true;
         _capsuleCollider.enabled = false;
         bulletShooter = GetComponent<BulletShooter>();
-        bossEnemyInstantiate = GetComponent<BossEnemyInstantiate>();
 
         bladeArray.OnStartBossAttack += () =>
         {
