@@ -11,6 +11,9 @@ public class BulletShooter : MonoBehaviour
     public Pattern currentPattern;
 
     private Transform player;
+    private float _rotateAngle;
+    private float _circleGapAngle = 0f;
+
 
     private void Start()
     {
@@ -90,23 +93,37 @@ public class BulletShooter : MonoBehaviour
 
     void ShootCircle()
     {
-        int count = 12;
-        for (int i = 0; i < count; i++)
+        int bulletCount = 14;
+        float gapAngle = 50f;
+
+        _circleGapAngle += 25f; // 每一波旋转缺口
+        if (_circleGapAngle >= 360f)
+            _circleGapAngle -= 360f;
+
+        float startAngle = _circleGapAngle + gapAngle / 2f;
+        float endAngle = _circleGapAngle - gapAngle / 2f + 360f;
+
+        float step = (endAngle - startAngle) / bulletCount;
+
+        for (int i = 0; i < bulletCount; i++)
         {
-            float angle = i * (360f / count);
-            Vector2 dir = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-            FireBullet(dir);
+            float angle = startAngle + step * i;
+            FireBullet(AngleToVector(angle));
         }
     }
 
     void ShootRotate()
     {
         int count = 12;
-        float angleOffset = Time.time * 60f; 
+        _rotateAngle += 10f; // 每次波次旋转多少度（可调）
+
         for (int i = 0; i < count; i++)
         {
-            float angle = angleOffset + i * (360f / count);
-            Vector2 dir = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            float angle = _rotateAngle + i * (360f / count);
+            Vector2 dir = new Vector2(
+                Mathf.Cos(angle * Mathf.Deg2Rad),
+                Mathf.Sin(angle * Mathf.Deg2Rad)
+            );
             FireBullet(dir);
         }
     }
@@ -115,5 +132,10 @@ public class BulletShooter : MonoBehaviour
     {
         GameObject b = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         b.GetComponent<Bullet>().SetDirection(dir);
+    }
+    private Vector2 AngleToVector(float angle)
+    {
+        float rad = angle * Mathf.Deg2Rad;
+        return new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
     }
 }

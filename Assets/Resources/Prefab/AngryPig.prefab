@@ -385,4 +385,5 @@ MonoBehaviour:
   _zone: {fileID: 0}
   _animator: {fileID: 1691050946644246311}
   _isKnockedBack: 0
+  _enemyHitClip: {fileID: 8300000, guid: be0b4195213674f4fa964e3869c729f7, type: 3}
   _angryPigOverrideController: {fileID: 22100000, guid: 95d8b0e1ef0913d4d9b25c8c23ba0006, type: 2}

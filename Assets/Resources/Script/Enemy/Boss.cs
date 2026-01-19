@@ -13,10 +13,13 @@ public class Boss : EnemyController
     [SerializeField] private BladeArray bladeArray;
     private bool _isDead = false;
     [SerializeField] private Animator _dieBodyAnimator;
-
+    private AudioSource _bossHit;
+    [SerializeField] private float hitSoundCooldown = 0.12f;
+    private float _lastHitSoundTime = -999f;
     protected override void Start()
     {
         base.Start();
+        _bossHit = GetComponent<AudioSource>();
         _originalDamageCooldown = _damageCooldown;
         _circleCollider = GetComponent<CircleCollider2D>();
         _capsuleCollider = GetComponent<CapsuleCollider2D>();
@@ -85,11 +88,33 @@ public class Boss : EnemyController
         {
             _damage = 1;
         }
+        else if (collision.CompareTag("Finisher"))
+        {
+            _damage = 99;
+        }
         if (_damage > 0)
         {
-            int oldHP = _hp; 
-            _hp -= _damage;
-            _bossHPBar.TakeDamage(_damage);
+            int oldHP = _hp;
+
+            bool isFinisher = collision.CompareTag("Finisher"); 
+
+            if (!isFinisher && _hp - _damage <= 0)
+            {
+                _hp = 1;
+            }
+            else
+            {
+                _hp -= _damage;
+            }
+
+            _bossHPBar.TakeDamage(oldHP - _hp);
+
+            if (Time.time - _lastHitSoundTime >= hitSoundCooldown)
+            {
+                _bossHit.PlayOneShot(_bossHit.clip);
+                _lastHitSoundTime = Time.time;
+            }
+
             StartCoroutine(BossHurt());
             CheckPhaseChange(oldHP, _hp);
         }
@@ -117,7 +142,7 @@ public class Boss : EnemyController
         _isHurt = true;
         gameObject.layer = LayerMask.NameToLayer(_invincibleLayerName);
         _lastHitTime = Time.time;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
         gameObject.layer = _originalLayer;
         _isHurt =false;
     }

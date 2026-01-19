@@ -92,7 +92,7 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    private void PauseGame()
+    public void PauseGame()
     {
         _pauseMenu.SetActive(true);
         _menu.SetActive(true);
@@ -106,7 +106,7 @@ public class GameStateManager : MonoBehaviour
         Time.timeScale = 0f;
         CurrentState = GameState.Paused;
     }
-    private void ResumeGame()
+    public void ResumeGame()
     {
         _pauseMenu.SetActive(false);
         Time.timeScale = 1f;

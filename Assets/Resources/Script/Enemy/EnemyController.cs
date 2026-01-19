@@ -32,6 +32,7 @@ public class EnemyController : MonoBehaviour
 
     protected int _originalLayer;
     protected string _invincibleLayerName = "EnemyInvincible";
+    [SerializeField] private AudioClip _enemyHitClip;
     private void Awake()
     {
         if(_zone == null)
@@ -72,19 +73,23 @@ public class EnemyController : MonoBehaviour
     {
         if (Time.time - _lastHitTime < _damageCooldown) return;
 
+        int _damage = 0;
         if (collision.CompareTag("Burst"))
         {
-            _hp -= 3;
-            EnterHurtState();
+            _damage = 3;
         }
         else if (collision.CompareTag("Sword"))
         {
-            _hp -= 1;
-            EnterHurtState();
+            _damage = 1;
         }
         else if (collision.CompareTag("Blade"))
         {
-            _hp -= 1;
+            _damage = 1;
+        }
+        if (_damage > 0)
+        {
+            _hp -= _damage;
+            EnemyHitSE.Instance.PlayEnemyHit(_enemyHitClip);
             EnterHurtState();
         }
     }

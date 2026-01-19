@@ -150,6 +150,7 @@ MonoBehaviour:
   _zone: {fileID: 0}
   _animator: {fileID: 6840987141742300933}
   _isKnockedBack: 0
+  _enemyHitClip: {fileID: 8300000, guid: be0b4195213674f4fa964e3869c729f7, type: 3}
 --- !u!1 &2971105617569945625
 GameObject:
   m_ObjectHideFlags: 0

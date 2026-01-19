@@ -110,7 +110,6 @@ public class BladeArray : MonoBehaviour
             yield return new WaitForSeconds(layerDelay);
         }
     }
-
     private IEnumerator FadeIn(SpriteRenderer sr, float duration)
     {
         float timer = 0f;
@@ -127,7 +126,6 @@ public class BladeArray : MonoBehaviour
         final.a = 1f;
         sr.color = final;
     }
-
     // ----------------- 剑阵环绕玩家 -----------------
     private IEnumerator FollowPlayerCircle()
     {
@@ -188,6 +186,10 @@ public class BladeArray : MonoBehaviour
                 Sequence seq = DOTween.Sequence();
                 seq.AppendInterval(stopDuration); // 停留
                 seq.Append(sword.DOMove(backPos, backDuration).SetEase(Ease.OutCubic)); // 后退
+                seq.AppendCallback(() =>
+                {
+                    sword.gameObject.tag = "Finisher";
+                });
                 seq.Append(sword.DOMove(_lastBOSSBody.position, attackDuration).SetEase(Ease.InCubic));
                 seq.AppendCallback(() =>
                 {
@@ -278,9 +280,6 @@ public class BladeArray : MonoBehaviour
         await UniTask.WhenAll(swordTasks);
 
     }
-
-
-
 
     // ----------------- 工具方法 -----------------
     private Vector2 AngleToVector(float angle)
