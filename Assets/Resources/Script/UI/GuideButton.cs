@@ -127,4 +127,13 @@ public class GuideButton : MonoBehaviour
         _volumeCanvas.SetActive(false);
         _isAnimating = false;
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
 }
