@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class InstantiateEnemy : MonoBehaviour
 {
-    [SerializeField] private GameObject[] _enemyPrefab;
-    private int _enemyType;
-    [SerializeField] private List<Transform> _spawnPoints = new List<Transform>();
+    [SerializeField] protected GameObject[] _enemyPrefab;
+    protected int _enemyType;
+    [SerializeField] protected List<Transform> _spawnPoints = new List<Transform>();
 
     private float _createTime = 3.0f;
     private float _createTimeMin = 0.1f;
@@ -18,12 +18,12 @@ public class InstantiateEnemy : MonoBehaviour
     public int _totalAmount;
     public int _enemyLeft;
 
-    private void Start()
+    protected virtual void Start()
     {
         _totalAmount = _enemyAmount;
         _enemyLeft = _totalAmount;
     }
-    private void Update()
+    protected virtual void Update()
     {
         _enemyLeft = _totalAmount - Kills.instance._kills - Kills.instance._explodes;
         if (PlayerHP.instance._HP <= 0)

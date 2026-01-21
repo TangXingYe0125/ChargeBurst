@@ -1045,7 +1045,6 @@ GameObject:
   - component: {fileID: 3905639599229831511}
   - component: {fileID: 3501096239003132687}
   - component: {fileID: 5268003109708703658}
-  - component: {fileID: 5268003109708703659}
   m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
@@ -1065,11 +1064,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -1454,6 +1453,7 @@ GameObject:
   - component: {fileID: 4970694910388198450}
   - component: {fileID: 3774949559852251913}
   - component: {fileID: 7352632423200608257}
+  - component: {fileID: 7352632423200608258}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1491,20 +1491,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5268003109708703659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876852324569709272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd0b7c05be4ac45468d6e5438f5c89d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scene: Tutorial Stage
-  loadToColor: {r: 0.9716981, g: 0, b: 0.60782796, a: 1}
 --- !u!222 &5340816292978138130
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1925,6 +1911,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7352632423200608258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5266127842060296988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b22a3f82e0df3904da913fe3a8c64d37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7474827770360002155
 RectTransform:
   m_ObjectHideFlags: 0

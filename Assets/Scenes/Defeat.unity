@@ -589,7 +589,7 @@ AudioSource:
   m_GameObject: {fileID: 919749470}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4503468654685640068, guid: d58c9a948d184e74bbe79f2843df5f15, type: 2}
   m_audioClip: {fileID: 8300000, guid: 26e24a86aa4fcb84db0e802da2234e42, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
@@ -1032,7 +1032,6 @@ GameObject:
   - component: {fileID: 3905639599229831511}
   - component: {fileID: 3501096239003132687}
   - component: {fileID: 5268003109708703658}
-  - component: {fileID: 5268003109708703659}
   m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
@@ -1052,11 +1051,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -1478,20 +1477,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5268003109708703659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876852324569709272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd0b7c05be4ac45468d6e5438f5c89d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scene: Tutorial Stage
-  loadToColor: {r: 0.9716981, g: 0, b: 0.60782796, a: 1}
 --- !u!222 &5340816292978138130
 CanvasRenderer:
   m_ObjectHideFlags: 0

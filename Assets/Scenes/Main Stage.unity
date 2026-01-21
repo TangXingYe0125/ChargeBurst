@@ -1054,14 +1054,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2161710066059327957}
-    - target: {fileID: 218584288719070081, guid: 0f2c7fb568afbf34abfe53ccf2f77e65, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PauseMenuBackToTitle
-      objectReference: {fileID: 0}
-    - target: {fileID: 218584288719070081, guid: 0f2c7fb568afbf34abfe53ccf2f77e65, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameStateManager, Assembly-CSharp
-      objectReference: {fileID: 0}
+    - target: {fileID: 1538045671904896199, guid: 0f2c7fb568afbf34abfe53ccf2f77e65, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 6498678608869416052, guid: 0f2c7fb568afbf34abfe53ccf2f77e65, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1146,14 +1142,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2161710066059327957}
-    - target: {fileID: 7420374781807858588, guid: 0f2c7fb568afbf34abfe53ccf2f77e65, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResumeGame
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420374781807858588, guid: 0f2c7fb568afbf34abfe53ccf2f77e65, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameStateManager, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 8192172673790052973, guid: 0f2c7fb568afbf34abfe53ccf2f77e65, type: 3}
       propertyPath: m_Name
       value: PauseMenu

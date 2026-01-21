@@ -1263,7 +1263,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2985413837274909300}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
-        m_MethodName: TestStage
+        m_MethodName: NextStage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1943,10 +1943,10 @@ MonoBehaviour:
   _prevPageButtonRect: {fileID: 1101430657}
   _closeButtonRect: {fileID: 5513952452005679407}
   _soundButtonRect: {fileID: 1730937108}
-  _guideCanvasAnimator: {fileID: 833417484}
-  _volumeCanvasAnimator: {fileID: 7131058725818194906}
   _attackGIFAnimator: {fileID: 1667182540}
   _chargeGIFAnimator: {fileID: 750572936}
+  _guideCanvasAnimator: {fileID: 833417484}
+  _volumeCanvasAnimator: {fileID: 7131058725818194906}
 --- !u!1 &1928417556
 GameObject:
   m_ObjectHideFlags: 0
@@ -2179,9 +2179,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1928511519790388170, guid: 119357e3ff517b844a51bbb39b5fc304, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 53887b51db2e9e245b7ade4b2b536fdb, type: 3}
+    - target: {fileID: 1928511519790388170, guid: 119357e3ff517b844a51bbb39b5fc304, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3083151107495434745, guid: 119357e3ff517b844a51bbb39b5fc304, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3559943021265252493, guid: 119357e3ff517b844a51bbb39b5fc304, type: 3}
       propertyPath: m_Pivot.x
@@ -2287,7 +2295,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6123485402913225589, guid: 119357e3ff517b844a51bbb39b5fc304, type: 3}
+    - {fileID: 926943729168863148, guid: 119357e3ff517b844a51bbb39b5fc304, type: 3}
+    - {fileID: 1671313031852056003, guid: 119357e3ff517b844a51bbb39b5fc304, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

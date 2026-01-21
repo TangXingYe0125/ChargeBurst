@@ -17,9 +17,20 @@ public class Boss : EnemyController
     private AudioSource _bossHit;
     [SerializeField] private float hitSoundCooldown = 0.12f;
     private float _lastHitSoundTime = -999f;
+    
+    private bool _isEntering = false;
+    [SerializeField] private GameObject _fireRing;
+    [SerializeField] private float _fadeDuration;
+    [SerializeField] private float _fadeWaitTime;
+    [SerializeField] private SpriteRenderer _bossBody;
     protected override void Start()
     {
         base.Start();
+
+        Color c = _bossBody.color;
+        c.a = 0f;
+        _bossBody.color = c;
+        _bossHPBar.gameObject.SetActive(false);
         _bossHit = GetComponent<AudioSource>();
         _originalDamageCooldown = _damageCooldown;
         _circleCollider = GetComponent<CircleCollider2D>();
@@ -27,6 +38,7 @@ public class Boss : EnemyController
         _circleCollider.enabled = true;
         _capsuleCollider.enabled = false;
         bulletShooter = GetComponent<BulletShooter>();
+        bulletShooter.enabled = false;
 
         bladeArray.OnStartBossAttack += () =>
         {
@@ -37,6 +49,7 @@ public class Boss : EnemyController
             _damageCooldown = _originalDamageCooldown;
             _isDead = true;
         };
+        _fireRing.SetActive(false);
     }
     private void Update()
     {
@@ -46,6 +59,10 @@ public class Boss : EnemyController
             StartCoroutine(BossDeathSequence());
         }
     }
+    private void OnEnable()
+    {
+        StartCoroutine(BossEntrance());
+    }
     protected override void Track()
     {
 
@@ -54,7 +71,7 @@ public class Boss : EnemyController
     {
         if (oldHP > bossEnemyInstantiate._instantiateHP && newHP <= bossEnemyInstantiate._instantiateHP)
         {
-            bossEnemyInstantiate.Instantiate();
+            StartCoroutine(bossEnemyInstantiate.BossInstantiateEnemy());           
         }
 
         if (oldHP > bladeArray.ctrlTriggerHp && newHP <= bladeArray.ctrlTriggerHp)
@@ -78,6 +95,7 @@ public class Boss : EnemyController
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        if (_isEntering) return;
         if (Time.time - _lastHitTime < _damageCooldown) return;
 
         int _damage = 0;
@@ -185,5 +203,38 @@ public class Boss : EnemyController
         yield return new WaitForSeconds(1.0f);
 
         GameStateManager.instance.SetState(GameState.Clear);
+    }
+
+    public IEnumerator BossEntrance()
+    {
+        yield return new WaitForSeconds(_fadeWaitTime);
+
+        _isEntering = true;
+        gameObject.layer = LayerMask.NameToLayer("EntryLayer"); 
+
+        _fireRing.SetActive(true);
+        yield return new WaitForSeconds(_fadeWaitTime);
+
+        yield return StartCoroutine(Fade(0.0f, 1.0f, _fadeDuration, _bossBody));
+
+        gameObject.layer = _originalLayer;
+        _isEntering = false;
+        _bossHPBar.gameObject.SetActive(true);
+        yield return new WaitForSeconds(_fadeWaitTime);
+
+        bulletShooter.enabled = true;
+    }
+    private IEnumerator Fade(float from, float to, float duration, SpriteRenderer sr)
+    {
+        float t = 0.0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(from, to, t / duration);
+            Color c = sr.color;
+            c.a = alpha;
+            sr.color = c;
+            yield return null;
+        }
     }
 }

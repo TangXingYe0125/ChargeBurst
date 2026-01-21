@@ -743,7 +743,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7410931046921019406}
   - component: {fileID: 2267136657338687888}
-  - component: {fileID: 926943729168863148}
   - component: {fileID: 4313913887457809369}
   m_Layer: 0
   m_Name: Attack
@@ -819,19 +818,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &926943729168863148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3806162501497008659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c3f106a78e1aa142b294d8d1a41114b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Gif: {fileID: 11400000, guid: bd3625e515f190f4f9ea314e5b008882, type: 2}
 --- !u!95 &4313913887457809369
 Animator:
   serializedVersion: 5
@@ -1703,7 +1689,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4225040561130017367}
   - component: {fileID: 1955110978302950}
-  - component: {fileID: 1671313031852056003}
   - component: {fileID: 4874564751520412097}
   m_Layer: 0
   m_Name: Charge
@@ -1779,19 +1764,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1671313031852056003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8099721058404909932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c3f106a78e1aa142b294d8d1a41114b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Gif: {fileID: 11400000, guid: f09099156e68ef54cbc249a818844824, type: 2}
 --- !u!95 &4874564751520412097
 Animator:
   serializedVersion: 5
@@ -1823,7 +1795,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4301965276829638562}
   - component: {fileID: 1928511519790388170}
-  - component: {fileID: 6123485402913225589}
   - component: {fileID: 4806637579310253174}
   m_Layer: 0
   m_Name: WASD
@@ -1841,7 +1812,7 @@ Transform:
   m_GameObject: {fileID: 8264438370854716098}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9720}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1899,19 +1870,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6123485402913225589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8264438370854716098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c3f106a78e1aa142b294d8d1a41114b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Gif: {fileID: 11400000, guid: d008bf1790d350346938f686f5a31d8e, type: 2}
 --- !u!95 &4806637579310253174
 Animator:
   serializedVersion: 5

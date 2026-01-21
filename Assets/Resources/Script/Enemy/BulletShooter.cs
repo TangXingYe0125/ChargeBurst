@@ -21,7 +21,7 @@ public class BulletShooter : MonoBehaviour
         StartCoroutine(ShootLoop());
     }
 
-    private IEnumerator ShootLoop()
+    public IEnumerator ShootLoop()
     {
         Pattern[] patterns = { Pattern.Aiming, Pattern.Spread, Pattern.Circle, Pattern.Rotate };
         Pattern lastPattern = Pattern.None; 
